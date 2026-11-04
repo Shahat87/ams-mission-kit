@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" width="1200" height="740" role="img">
+<title>AMS Mission Control board flow</title>
+<desc>Cards flow Backlog, Ready, Building, QA, Review, Merge gate, staging, Done. Review bounces to Ready or QA. Blocked cards wait for a human. main is merged by a human only.</desc>
+<defs>
+<marker id="a-sl" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#5a8fd8" opacity=".7" filter="url(#glowA)" stroke="#5a8fd8" stroke-width="1.5"/><path d="M1 1 L9 5 L1 9 Z" fill="#5a8fd8"/></marker>
+<marker id="a-fg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#7fb8ff" opacity=".7" filter="url(#glowA)" stroke="#7fb8ff" stroke-width="1.5"/><path d="M1 1 L9 5 L1 9 Z" fill="#7fb8ff"/></marker>
+<marker id="a-sg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#5ce1ff" opacity=".7" filter="url(#glowA)" stroke="#5ce1ff" stroke-width="1.5"/><path d="M1 1 L9 5 L1 9 Z" fill="#5ce1ff"/></marker>
+<marker id="a-oc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#ffb547" opacity=".7" filter="url(#glowA)" stroke="#ffb547" stroke-width="1.5"/><path d="M1 1 L9 5 L1 9 Z" fill="#ffb547"/></marker>
+<marker id="a-co" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#3b86ff" opacity=".7" filter="url(#glowA)" stroke="#3b86ff" stroke-width="1.5"/><path d="M1 1 L9 5 L1 9 Z" fill="#3b86ff"/></marker>
+<radialGradient id="bg" cx="600" cy="260" r="900" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0c2656"/><stop offset=".32" stop-color="#071636"/><stop offset=".7" stop-color="#030a1c"/><stop offset="1" stop-color="#01040b"/></radialGradient>
+<linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".22" stop-color="#b9c6dc"/><stop offset=".45" stop-color="#f2f6ff"/><stop offset=".62" stop-color="#7b8aa8"/><stop offset=".82" stop-color="#d7e1f2"/><stop offset="1" stop-color="#8d9bb6"/></linearGradient>
+<filter id="glowB" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1600" height="1200"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="glowA" filterUnits="userSpaceOnUse" x="-20" y="-20" width="60" height="60"><feGaussianBlur stdDeviation="1.6"/></filter>
+</defs>
+<rect width="1200" height="740" rx="24" fill="url(#bg)"/>
+<rect x="25" y="16" width="1150" height="80" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="1"/>
+<text x="45" y="40" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#8fb0e0" text-anchor="start" letter-spacing="1.5">SESSION</text>
+<rect x="45" y="52" width="270" height="32" rx="10" fill="none" fill-opacity=".85" stroke="#2f78ff" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="45" y="52" width="270" height="32" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="1.5"/>
+<text x="180" y="73" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#e9f1ff" text-anchor="middle" >Haiku · manages the session</text>
+<rect x="335" y="52" width="380" height="32" rx="10" fill="none" fill-opacity=".85" stroke="#2f78ff" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="335" y="52" width="380" height="32" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="1.5"/>
+<text x="525" y="73" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#e9f1ff" text-anchor="middle" >Opus pilot · picks model + skills per lane</text>
+<text x="740" y="73" font-family="ui-monospace, Consolas, monospace" font-size="14" font-weight="400" fill="#8fb0e0" text-anchor="start" >one task = one agent = one fresh session</text>
+<rect x="25" y="240" width="72" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#5a7bb0" stroke-width="1.5"/>
+<text x="61.0" y="296" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#e9f1ff" text-anchor="middle" >Backlog</text>
+<rect x="115" y="240" width="72" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#5a7bb0" stroke-width="1.5"/>
+<text x="151.0" y="296" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#e9f1ff" text-anchor="middle" >Ready</text>
+<rect x="205" y="240" width="168" height="100" rx="10" fill="none" fill-opacity=".85" stroke="#2f78ff" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="205" y="240" width="168" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="2"/>
+<text x="289.0" y="268" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="middle" >Building</text>
+<text x="289.0" y="288" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#8fb0e0" text-anchor="middle" >Build lane</text>
+<text x="289.0" y="312" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >Haiku / Sonnet / Opus</text>
+<text x="289.0" y="330" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >· super-build</text>
+<rect x="391" y="240" width="168" height="100" rx="10" fill="none" fill-opacity=".85" stroke="#2f78ff" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="391" y="240" width="168" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="2"/>
+<text x="475.0" y="268" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="middle" >QA</text>
+<text x="475.0" y="288" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#8fb0e0" text-anchor="middle" >QA lane</text>
+<text x="475.0" y="312" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >Haiku / Sonnet</text>
+<text x="475.0" y="330" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >· super-qa</text>
+<rect x="577" y="240" width="168" height="100" rx="10" fill="none" fill-opacity=".85" stroke="#2f78ff" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="577" y="240" width="168" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="2"/>
+<text x="661.0" y="268" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="middle" >Review</text>
+<text x="661.0" y="288" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#8fb0e0" text-anchor="middle" >Review lane</text>
+<text x="661.0" y="312" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >Opus / Sonnet</text>
+<text x="661.0" y="330" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >· super-review</text>
+<rect x="981" y="240" width="80" height="100" rx="10" fill="none" fill-opacity=".85" stroke="#24c8f5" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="981" y="240" width="80" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#5ce1ff" stroke-width="2"/>
+<text x="1021.0" y="296" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#e9f1ff" text-anchor="middle" >staging</text>
+<rect x="1079" y="240" width="96" height="100" rx="10" fill="none" fill-opacity=".85" stroke="#24c8f5" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="1079" y="240" width="96" height="100" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#5ce1ff" stroke-width="2"/>
+<text x="1127.0" y="268" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="middle" >Done</text>
+<text x="1127.0" y="294" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >Done ·</text>
+<text x="1127.0" y="312" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >Opus ·</text>
+<text x="1127.0" y="330" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >super-review</text>
+<rect x="763" y="240" width="200" height="190" rx="10" fill="none" fill-opacity=".85" stroke="#2f78ff" stroke-width="8" opacity=".55" filter="url(#glowB)"/>
+<rect x="763" y="240" width="200" height="190" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#3b86ff" stroke-width="2"/>
+<text x="863" y="268" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="middle" >Merge gate</text>
+<text x="863" y="288" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="400" fill="#9cc8ff" text-anchor="middle" >super-board-merge-gate.sh</text>
+<circle cx="777" cy="310" r="3" fill="#3b86ff"/>
+<text x="787" y="314" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#e9f1ff" text-anchor="start" >verify_commands in a clean</text>
+<text x="787" y="331" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#e9f1ff" text-anchor="start" >clone (no GitHub creds)</text>
+<circle cx="777" cy="350" r="3" fill="#3b86ff"/>
+<text x="787" y="354" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#e9f1ff" text-anchor="start" >money / auth / schema / size</text>
+<text x="787" y="371" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#e9f1ff" text-anchor="start" >→ waits for a human</text>
+<circle cx="777" cy="390" r="3" fill="#3b86ff"/>
+<text x="787" y="394" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#e9f1ff" text-anchor="start" >robot your-bot merges</text>
+<text x="787" y="411" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#e9f1ff" text-anchor="start" >→ staging, per policy</text>
+<line x1="97" y1="290" x2="115" y2="290" stroke="#7fb8ff" stroke-width="1.5" marker-end="url(#a-fg)"/>
+<line x1="187" y1="290" x2="205" y2="290" stroke="#7fb8ff" stroke-width="1.5" marker-end="url(#a-fg)"/>
+<line x1="373" y1="290" x2="391" y2="290" stroke="#7fb8ff" stroke-width="1.5" marker-end="url(#a-fg)"/>
+<line x1="559" y1="290" x2="577" y2="290" stroke="#7fb8ff" stroke-width="1.5" marker-end="url(#a-fg)"/>
+<line x1="745" y1="290" x2="763" y2="290" stroke="#7fb8ff" stroke-width="1.5" marker-end="url(#a-fg)"/>
+<line x1="963" y1="290" x2="981" y2="290" stroke="#5ce1ff" stroke-width="1.5" marker-end="url(#a-sg)"/>
+<line x1="1061" y1="290" x2="1079" y2="290" stroke="#5ce1ff" stroke-width="1.5" marker-end="url(#a-sg)"/>
+<path d="M720 240 C720 120 170 120 170 240" fill="none" stroke="#5a8fd8" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#a-sl)"/><text x="445" y="138" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#8fb0e0" text-anchor="middle" >[builder] finding</text>
+<path d="M640 240 C640 196 500 196 500 240" fill="none" stroke="#5a8fd8" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#a-sl)"/><text x="570" y="198" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#8fb0e0" text-anchor="middle" >[qa] finding</text>
+<path d="M430 240 C430 190 150 190 150 240" fill="none" stroke="#5a8fd8" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#a-sl)"/><text x="290" y="228" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#8fb0e0" text-anchor="middle" >QA fail → rebuild</text>
+<line x1="1021" y1="340" x2="1021" y2="480" stroke="#7fb8ff" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#a-fg)"/>
+<text x="1032" y="412" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e9f1ff" text-anchor="start" >Human merges</text>
+<rect x="981" y="480" width="194" height="62" rx="10" fill="#071a3f" fill-opacity=".85" stroke="url(#silver)" stroke-width="3.5"/>
+<rect x="997" y="508" width="16" height="13" rx="2" fill="url(#silver)"/><path d="M1000 508 v-5 a5 5 0 0 1 10 0 v5" fill="none" stroke="url(#silver)" stroke-width="2.5"/>
+<text x="1024" y="509" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="start" >main</text>
+<text x="1024" y="529" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#8fb0e0" text-anchor="start" >Human only</text>
+<rect x="115" y="510" width="825" height="110" rx="10" fill="none" fill-opacity=".85" stroke="#ffb547" stroke-width="8" opacity=".3" filter="url(#glowB)"/>
+<rect x="115" y="510" width="825" height="110" rx="10" fill="#071a3f" fill-opacity=".85" stroke="#ffb547" stroke-width="2"/>
+<text x="135" y="538" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#e9f1ff" text-anchor="start" >Blocked</text>
+<text x="135" y="564" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#e9f1ff" text-anchor="start" >❓ unclear / too big · ⏳ sequenced · 👯 duplicate · 🛡 truth-check failed</text>
+<rect x="135" y="578" width="470" height="30" rx="8" fill="#ffb547"/>
+<text x="150" y="599" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#1a1206" text-anchor="start" >needs-you → a human approves, the card returns to Review</text>
+<line x1="151" y1="340" x2="151" y2="510" stroke="#ffb547" stroke-opacity=".8" stroke-width="1.5" marker-end="url(#a-oc)"/>
+<line x1="661" y1="340" x2="661" y2="510" stroke="#ffb547" stroke-opacity=".8" stroke-width="1.5" marker-end="url(#a-oc)"/>
+<line x1="863" y1="430" x2="863" y2="510" stroke="#ffb547" stroke-opacity=".8" stroke-width="1.5" marker-end="url(#a-oc)"/>
+<rect x="25" y="650" width="1150" height="66" rx="10" fill="#071a3f" fill-opacity=".6" stroke="#5a7bb0" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="45" y="678" font-family="ui-monospace, Consolas, monospace" font-size="13" font-weight="700" fill="#8fb0e0" text-anchor="start" >coming</text>
+<text x="45" y="702" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#e9f1ff" text-anchor="start" >Codex · Grok · Pi run only inside Docker sandbox lanes</text>
+</svg>
