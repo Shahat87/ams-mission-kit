@@ -1,0 +1,1 @@
+Run super-collect on this project for the posthog source. The super-board config is set up, `gh` is available and PostHog is reachable through the collect scripts. Nobody is around to confirm, so stop at the dry-run plan.

@@ -1,0 +1,12 @@
+{"eventID": "1b7d0e3c5a2f4e6d9c8b7a6f5e4d3c2b", "dateCreated": "{{ago:11d}}",
+ "title": "TypeError: Cannot read properties of null (reading 'url')",
+ "release": {"version": "web@1.3.9"},
+ "tags": [{"key": "environment", "value": "production"}, {"key": "release", "value": "web@1.3.9"},
+          {"key": "url", "value": "https://shop.example.com/profile"}],
+ "entries": [
+  {"type": "exception", "data": {"values": [{"type": "TypeError",
+    "value": "Cannot read properties of null (reading 'url')",
+    "stacktrace": {"frames": [
+      {"filename": "src/profile/Avatar.tsx", "lineNo": 8, "function": "Avatar", "inApp": true}]}}]}},
+  {"type": "request", "data": {"method": "GET", "url": "https://shop.example.com/profile"}}
+ ]}

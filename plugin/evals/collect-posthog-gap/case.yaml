@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: collect-posthog-gap
+description: >
+  PostHog collect, dry-run. No product signal clears its threshold; the receipt-upload workflow
+  (/receipts/upload) sends no events while signup is fully instrumented. super-collect's
+  tracking-gap pass must plan exactly one `feature` ticket, label analytics, fingerprint
+  gap|<workflow>, naming the missing success/failure events with privacy-safe properties —
+  and must not touch app code. Offline: stubbed gh and fixture-backed PostHog.
+tags: [super-collect, collect-posthog]
+runs: 3
+expected_outcome: One analytics feature ticket (gap|receipt-upload or similar) in the dry-run plan; nothing for signup; no code edits.
+execution:
+  max_turns: 60
+  timeout_seconds: 1200
+  allowed_tools: [Read, Glob, Grep, Skill, Bash, Write, Agent]
+context:
+  scaffold_script: seed.sh

@@ -1,0 +1,11 @@
+# mc-lane-smoke: mc-lane + the fake tool, for tests only (spec section 11). A real tool never runs from this image
+# (A6): the `fake` entry exists only here, not in the production tools.json.
+# Build context is plugin/ (the fake tool lives in tests/fixtures).
+ARG BASE=mc-lane
+FROM ${BASE}
+USER root
+COPY --chown=0:0 tests/fixtures/lane_fake_tool.py /opt/mc-lane/fake_tool.py
+RUN chmod 0444 /opt/mc-lane/fake_tool.py \
+ && python3 -c 'import json; p="/opt/mc-lane/tools.json"; d=json.load(open(p)); d["tools"]["fake"]={"argv":["python3","/opt/mc-lane/fake_tool.py","{model}"],"stdin_brief":True}; json.dump(d,open(p,"w"),indent=2)' \
+ && chmod 0444 /opt/mc-lane/tools.json
+USER 1000:1000

@@ -1,0 +1,6 @@
+{
+  "recorded_at": 0,
+  "rate_limits": {
+    "five_hour": { "used_percentage": 42, "resets_at": 0 }
+  }
+}

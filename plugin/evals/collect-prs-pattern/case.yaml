@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: collect-prs-pattern
+description: >
+  prs collect, dry-run, over three merged PRs. #21 and #24 share one root cause at one boundary
+  (date-only strings parsed as UTC, read with local getters; no shared helper), each fixed only
+  at its own call site. #26 has a one-off missing await fixed in that PR. super-collect must plan
+  exactly one pattern ticket citing #21 and #24 with a regression criterion, and nothing for #26.
+  Offline: stubbed gh serves the GraphQL search.
+tags: [super-collect, collect-prs]
+runs: 3
+expected_outcome: One prs|<boundary>|<cause> ticket for the date-only/local-getter cause citing #21 and #24; no ticket from #26.
+execution:
+  max_turns: 60
+  timeout_seconds: 1200
+  allowed_tools: [Read, Glob, Grep, Skill, Bash, Write, Agent]
+context:
+  scaffold_script: seed.sh

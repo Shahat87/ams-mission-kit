@@ -1,0 +1,24 @@
+{
+ "_doc": "HogQL answers for collect_posthog.py, first match wins. `match`: every substring must be in the query; `equals`: the whole query. Rows follow the column order of the query in collect_posthog.py.",
+ "routes": [
+  {"name": "events inventory", "match": ["group by event order by count() desc"], "rows": [
+    ["$pageview", 4210, 388, "{{ago:1h}}"],
+    ["$autocapture", 2950, 301, "{{ago:1h}}"],
+    ["$web_vitals", 400, 180, "{{ago:1h}}"],
+    ["signup_started", 142, 131, "{{ago:3h}}"],
+    ["signup_completed", 118, 117, "{{ago:3h}}"],
+    ["signup_failed", 9, 8, "{{ago:2d}}"],
+    ["checkout_started", 96, 81, "{{ago:2h}}"],
+    ["checkout_completed", 74, 66, "{{ago:2h}}"],
+    ["checkout_failed", 6, 6, "{{ago:1d}}"],
+    ["$exception", 3, 2, "{{ago:4d}}"],
+    ["$rageclick", 2, 2, "{{ago:6d}}"]]},
+  {"name": "ping: which signal events exist", "match": ["where event in (", "group by event"], "rows": [
+    ["$exception", 3], ["$rageclick", 2], ["$web_vitals", 400]]},
+  {"name": "ping: connection", "equals": "select 1", "rows": [[1]]},
+  {"name": "web vitals p75 per path (all under the limits)", "match": ["'$web_vitals'", "quantile(0.75)"], "rows": [
+    ["/checkout", 220, 120, 2100.0, 180.0, 0.03, "sess-vitals-1"],
+    ["/receipts/upload", 180, 90, 2600.0, 240.0, 0.05, "sess-vitals-2"]]},
+  {"name": "verifier check: nothing since", "match": ["select count(), count(distinct person_id), max(timestamp)"], "rows": [[0, 0, null]]}
+ ]
+}

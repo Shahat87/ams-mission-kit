@@ -1,0 +1,216 @@
+{
+  "data": {
+    "viewer": {
+      "login": "example-bot"
+    },
+    "repositoryOwner": {
+      "projectV2": {
+        "items": {
+          "pageInfo": {
+            "hasNextPage": false
+          },
+          "nodes": [
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "Ready",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 12,
+                "title": "Add thing",
+                "url": "https://github.com/owner/repo/issues/12",
+                "labels": {
+                  "nodes": [
+                    {
+                      "name": "feature"
+                    }
+                  ]
+                },
+                "timelineItems": {
+                  "nodes": [
+                    {
+                      "__typename": "ProjectV2ItemStatusChangedEvent",
+                      "id": "PVSCE_1",
+                      "createdAt": "2026-01-15T11:10:00Z",
+                      "actor": {
+                        "login": "alice"
+                      },
+                      "previousStatus": "Building",
+                      "status": "Ready",
+                      "project": {
+                        "number": 4
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "Ready",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 13,
+                "title": "QA me",
+                "url": "https://github.com/owner/repo/issues/13",
+                "labels": {
+                  "nodes": [
+                    {
+                      "name": "qa"
+                    }
+                  ]
+                },
+                "timelineItems": {
+                  "nodes": []
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "Review",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 14,
+                "title": "Review me",
+                "url": "https://github.com/owner/repo/issues/14",
+                "labels": {
+                  "nodes": []
+                },
+                "timelineItems": {
+                  "nodes": []
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "Building",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 15,
+                "title": "Busy",
+                "url": "https://github.com/owner/repo/issues/15",
+                "labels": {
+                  "nodes": []
+                },
+                "timelineItems": {
+                  "nodes": []
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "Done",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 16,
+                "title": "Shipped",
+                "url": "https://github.com/owner/repo/issues/16",
+                "labels": {
+                  "nodes": []
+                },
+                "timelineItems": {
+                  "nodes": []
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "QA",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 17,
+                "title": "QA col",
+                "url": "https://github.com/owner/repo/issues/17",
+                "labels": {
+                  "nodes": []
+                },
+                "timelineItems": {
+                  "nodes": []
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-15T12:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  {
+                    "name": "Ready",
+                    "field": {
+                      "name": "Status"
+                    }
+                  }
+                ]
+              },
+              "content": {
+                "__typename": "PullRequest",
+                "number": 30,
+                "title": "Fix thing",
+                "url": "https://github.com/owner/repo/pull/30",
+                "closingIssuesReferences": {
+                  "nodes": [
+                    {
+                      "number": 12
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

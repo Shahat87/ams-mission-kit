@@ -1,0 +1,12 @@
+# Fresh per run, copied from the image (never from the host profile). No secrets here.
+# The container is the sandbox, so Codex runs without its own (UNVERIFIED keys: confirm with codex 0.160.1 in the image).
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+cli_auth_credentials_store = "file"
+check_for_update_on_startup = false
+
+[analytics]
+enabled = false
+
+[feedback]
+enabled = false

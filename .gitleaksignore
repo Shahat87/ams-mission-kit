@@ -1,0 +1,2 @@
+# Test sentinel strings in a no-leak test, not real secrets.
+plugin/tests/test_watchdog.py:generic-api-key:576

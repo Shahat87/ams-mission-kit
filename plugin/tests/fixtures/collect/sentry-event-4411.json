@@ -1,0 +1,18 @@
+{"eventID": "9f2c41aa0b7e4c1f8d3e2a1b0c9d8e7f", "dateCreated": "{{ago:2h}}",
+ "title": "TypeError: Cannot read properties of undefined (reading 'items')",
+ "release": {"version": "web@1.4.2"},
+ "tags": [{"key": "environment", "value": "production"}, {"key": "release", "value": "web@1.4.2"},
+          {"key": "url", "value": "https://shop.example.com/checkout"}, {"key": "browser", "value": "Chrome 129"},
+          {"key": "user.email", "value": "jane@example.com"}],
+ "entries": [
+  {"type": "exception", "data": {"values": [{"type": "TypeError",
+    "value": "Cannot read properties of undefined (reading 'items')",
+    "stacktrace": {"frames": [
+      {"filename": "node_modules/react-dom/client.js", "lineNo": 1201, "function": "commitRoot", "inApp": false},
+      {"filename": "src/checkout/CheckoutPage.tsx", "lineNo": 31, "function": "CheckoutPage", "inApp": true},
+      {"filename": "src/checkout/summary.ts", "lineNo": 12, "function": "buildSummary", "inApp": true}]}}]}},
+  {"type": "request", "data": {"method": "GET", "url": "https://shop.example.com/checkout"}},
+  {"type": "breadcrumbs", "data": {"values": [
+    {"timestamp": "{{ago:2h}}", "category": "navigation", "message": "/cart -> /checkout"},
+    {"timestamp": "{{ago:2h}}", "category": "ui.click", "message": "button#remove-last-item by jane@example.com"}]}}
+ ]}

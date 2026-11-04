@@ -1,0 +1,6 @@
+{
+  "permission": "write",
+  "user": {
+    "login": "alice"
+  }
+}

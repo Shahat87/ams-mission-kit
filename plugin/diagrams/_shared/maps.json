@@ -1,0 +1,70 @@
+[
+ {
+  "id": "skill-map",
+  "label": "Skill map",
+  "short": "Skill map",
+  "path": "skill-map/#view=root",
+  "dir": "skill-map",
+  "blurb": "Every skill, lane and hook. Click to drill in.",
+  "thumb": "assets/skill-map.png",
+  "nav": true,
+  "icon": "skillmap",
+  "kind": "page"
+ },
+ {
+  "id": "onboarding",
+  "label": "Setup simulator",
+  "path": "onboarding/",
+  "dir": "onboarding",
+  "blurb": "The install line and the 8 <code>onboard</code> steps, as your terminal shows them.",
+  "thumb": "assets/onboarding.png",
+  "nav": false,
+  "kind": "page"
+ },
+ {
+  "id": "impeccable",
+  "label": "Impeccable map",
+  "short": "Impeccable",
+  "path": "impeccable/",
+  "dir": "impeccable",
+  "blurb": "v4.5.2: 27 design commands, a router and 7 stages, from setup to polish. Click one for what it does.",
+  "thumb": "assets/impeccable.png",
+  "nav": true,
+  "logo": "assets/logos/impeccable.png",
+  "kind": "map"
+ },
+ {
+  "id": "pstack",
+  "label": "pstack map",
+  "short": "pstack",
+  "path": "pstack/",
+  "dir": "pstack",
+  "blurb": "pstack's 60 skills on the 6-stage SDLC layout, Plan to Maintain. Pan, zoom, click a skill.",
+  "thumb": "assets/pstack.png",
+  "nav": true,
+  "logo": "assets/logos/poteto.png",
+  "kind": "map"
+ },
+ {
+  "id": "mattpocock",
+  "label": "Matt Pocock map",
+  "short": "Matt Pocock",
+  "path": "mattpocock/",
+  "dir": "mattpocock",
+  "blurb": "Matt Pocock's 27 skills on the 6-stage SDLC layout, with the gaps marked.",
+  "thumb": "assets/mattpocock.png",
+  "nav": true,
+  "logo": "assets/logos/mattpocock.png",
+  "kind": "map"
+ },
+ {
+  "id": "writing-standard",
+  "label": "Writing standard",
+  "path": "writing-standard/",
+  "dir": "writing-standard",
+  "blurb": "How commits, tickets, PRs and comments are written.",
+  "thumb": "assets/writing-standard.png",
+  "nav": false,
+  "kind": "page"
+ }
+]

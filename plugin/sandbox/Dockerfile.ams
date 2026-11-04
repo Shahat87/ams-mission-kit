@@ -1,0 +1,10 @@
+# mc-lane-ams: AMS variant (spec section 9). Python 3.14 and Node 22 are already in the base.
+# Adds LibreOffice Calc and fonts for the recalculation tests (spec 9). UNVERIFIED: package list vs the AMS gate's
+# image note; compare with the AMS gate Dockerfile when onboarding.
+ARG BASE=mc-lane
+FROM ${BASE}
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends libreoffice-calc fonts-liberation fonts-dejavu-core fonts-noto-core \
+ && rm -rf /var/lib/apt/lists/*
+USER 1000:1000

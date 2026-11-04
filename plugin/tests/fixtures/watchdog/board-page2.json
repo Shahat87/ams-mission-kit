@@ -1,0 +1,34 @@
+{
+  "data": {
+    "viewer": { "login": "octo-operator" },
+    "rateLimit": { "remaining": 4700 },
+    "repositoryOwner": {
+      "projectV2": {
+        "items": {
+          "pageInfo": { "hasNextPage": false, "endCursor": null },
+          "nodes": [
+            {
+              "updatedAt": "2026-01-01T00:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  { "name": "Ready", "field": { "name": "Status" } }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 40,
+                "title": "Second page card",
+                "state": "OPEN",
+                "body": "### ⛔ Preflight\n\nStuff.\n\n## Blocked by\n\n- None.\n",
+                "labels": { "nodes": [] },
+                "assignees": { "nodes": [] },
+                "comments": { "nodes": [] },
+                "timelineItems": { "nodes": [] }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

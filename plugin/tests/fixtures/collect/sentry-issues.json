@@ -1,0 +1,20 @@
+[
+ {"id": "4411", "shortId": "WEB-4411", "title": "TypeError: Cannot read properties of undefined (reading 'items')",
+  "culprit": "src/checkout/summary.ts in buildSummary", "level": "error", "isUnhandled": true,
+  "status": "unresolved", "substatus": "ongoing", "count": "37", "userCount": 14,
+  "firstSeen": "{{ago:12d}}", "lastSeen": "{{ago:2h}}",
+  "stats": {"24h": [[0, 1], [3600, 2], [7200, 3]]},
+  "permalink": "https://acme.sentry.io/issues/4411/"},
+ {"id": "4490", "shortId": "WEB-4490", "title": "TypeError: Cannot read properties of null (reading 'url')",
+  "culprit": "src/profile/Avatar.tsx in Avatar", "level": "error", "isUnhandled": true,
+  "status": "unresolved", "substatus": "ongoing", "count": "9", "userCount": 4,
+  "firstSeen": "{{ago:13d}}", "lastSeen": "{{ago:11d}}",
+  "stats": {"24h": [[0, 0]]},
+  "permalink": "https://acme.sentry.io/issues/4490/"},
+ {"id": "4502", "shortId": "WEB-4502", "title": "ResizeObserver loop completed with undelivered notifications",
+  "culprit": "?", "level": "warning", "isUnhandled": false,
+  "status": "unresolved", "substatus": "ongoing", "count": "1", "userCount": 1,
+  "firstSeen": "{{ago:3d}}", "lastSeen": "{{ago:3d}}",
+  "stats": {"24h": [[0, 0]]},
+  "permalink": "https://acme.sentry.io/issues/4502/"}
+]

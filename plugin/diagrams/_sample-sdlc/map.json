@@ -1,0 +1,912 @@
+{
+ "meta": {
+  "id": "sample",
+  "name": "Sample skill pack",
+  "out": "sdlc-template",
+  "version": "template preview",
+  "tagline": "Preview of the SDLC template with made-up sample data: six stage layers, categories side by side, chains in trigger order.",
+  "sources": [
+   {
+    "label": "Sample skill pack docs",
+    "url": "https://example.com/sample-pack"
+   }
+  ]
+ },
+ "stages": [
+  {
+   "id": "plan",
+   "name": "Plan",
+   "principle": "Decide **what** and **why** before building.",
+   "when": [
+    "When nobody can say what to build → you are in Plan"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "design",
+   "name": "Design",
+   "principle": "Choose the **shape** of the solution.",
+   "when": [
+    "When the what is clear but not the how → you are in Design"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "build",
+   "name": "Build",
+   "principle": "Make it, **with tests**.",
+   "when": [
+    "When the approach is agreed → you are in Build"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "test",
+   "name": "Test",
+   "principle": "Prove it works.",
+   "when": [
+    "When it is built → you are in Test"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "deploy",
+   "name": "Deploy",
+   "principle": "Ship it safely.",
+   "when": [
+    "When it is proven → you are in Deploy"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "maintain",
+   "name": "Maintain",
+   "principle": "Keep it healthy.",
+   "when": [
+    "When it is live → you are in Maintain"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  }
+ ],
+ "categories": [
+  {
+   "id": "clarify",
+   "stage": "plan",
+   "name": "Clarify the idea",
+   "blurb": "Get the why on paper.",
+   "principle": "Do not plan in your head. **Interview first**, then write the why down.",
+   "when": [
+    "When the idea is fuzzy → start with grill",
+    "When you have the answers → write-intent"
+   ],
+   "chain": [
+    "grill",
+    "write-intent"
+   ],
+   "chainWhy": "You cannot write the why before the questions are answered.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "break",
+   "stage": "plan",
+   "name": "Break it down",
+   "blurb": "Small slices.",
+   "principle": "**Small slices** beat one big plan.",
+   "when": [
+    "When the plan is too big → slice",
+    "When asked how long → estimate"
+   ],
+   "chain": [
+    "slice",
+    "estimate"
+   ],
+   "chainWhy": "Size only makes sense once the slices exist.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "shape",
+   "stage": "design",
+   "name": "Shape the solution",
+   "blurb": "Agree the approach.",
+   "principle": "**Argue on paper**, not in code.",
+   "when": [
+    "When the approach is chosen → design-review",
+    "When a module needs a public face → interface"
+   ],
+   "chain": [
+    "design-review",
+    "interface"
+   ],
+   "chainWhy": "Review the approach, then fix the seams.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "implement",
+   "stage": "build",
+   "name": "Build with tests",
+   "blurb": "Test first.",
+   "principle": "**Prove each step** with a test.",
+   "when": [
+    "When building something new → tdd",
+    "When it works but is messy → refactor"
+   ],
+   "chain": [
+    "tdd",
+    "refactor"
+   ],
+   "chainWhy": "Red, green, then refactor.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "merge",
+   "stage": "build",
+   "name": "Get it merged",
+   "blurb": "Review.",
+   "principle": "A second pair of eyes before merge.",
+   "when": [
+    "When a change is ready → review"
+   ],
+   "chain": [
+    "review"
+   ],
+   "chainWhy": "Single step.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "prove",
+   "stage": "test",
+   "name": "Prove it works",
+   "blurb": "Evidence.",
+   "principle": "**Show evidence**, do not claim.",
+   "when": [
+    "When a user flow must keep working → e2e",
+    "When you say done → verify"
+   ],
+   "chain": [
+    "e2e",
+    "verify"
+   ],
+   "chainWhy": "Flow tests first, then a final proof run.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  {
+   "id": "respond",
+   "stage": "maintain",
+   "name": "Respond to problems",
+   "blurb": "Bugs and incidents.",
+   "principle": "**Triage fast**, learn from every incident.",
+   "when": [
+    "When a bug report arrives → triage",
+    "When an incident is over → postmortem"
+   ],
+   "chain": [
+    "triage",
+    "postmortem"
+   ],
+   "chainWhy": "Triage during, postmortem after.",
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  }
+ ],
+ "anytime": [
+  {
+   "id": "habits",
+   "name": "Habits",
+   "blurb": "Used at any point.",
+   "items": [
+    "glossary",
+    "zoom-out"
+   ]
+  }
+ ],
+ "skills": {
+  "grill": {
+   "name": "grill",
+   "command": "/grill",
+   "trigger": "interview me",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When the idea is **fuzzy** and ==you cannot write it down yet== → [[grill]]",
+    "When two people **disagree** on scope → [[grill]]"
+   ],
+   "whatItIs": "Interviews you, **one question at a time**, until the plan is clear.",
+   "howItWorks": [
+    "Reads what you wrote",
+    "Asks the **next most important** question",
+    "Writes the answers into a plan"
+   ],
+   "example": {
+    "situation": "You have a vague idea: invoice reminders.",
+    "youType": "/grill invoice reminders",
+    "whatHappens": [
+     "It asks who sends them.",
+     "It asks when they stop.",
+     "It writes the answers down."
+    ],
+    "youGet": "A clear one-page plan."
+   },
+   "behindTheScenes": [
+    [
+     "/grill",
+     "asks questions",
+     "plan"
+    ]
+   ],
+   "next": [
+    "write-intent"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "write-intent": {
+   "name": "write-intent",
+   "command": "/write-intent",
+   "trigger": "write the why",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When the interview is done and ==the plan needs a home== → [[write-intent]]"
+   ],
+   "whatItIs": "Turns the plan into an **intent file** a person and an AI can both read.",
+   "howItWorks": [
+    "Reads the interview",
+    "Writes the why, the goal and the limits"
+   ],
+   "example": {
+    "situation": "The interview is finished.",
+    "youType": "/write-intent",
+    "whatHappens": [
+     "It reads the answers.",
+     "It writes intent.md."
+    ],
+    "youGet": "intent.md, no code."
+   },
+   "behindTheScenes": [
+    [
+     "/write-intent",
+     "reads answers",
+     "intent.md"
+    ]
+   ],
+   "next": [
+    "slice"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "slice": {
+   "name": "slice",
+   "command": "/slice",
+   "trigger": "split the work",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When the plan is **too big** to build in one go → [[slice]]"
+   ],
+   "whatItIs": "Splits a plan into **small, shippable slices**.",
+   "howItWorks": [
+    "Reads intent.md",
+    "Cuts it into thin vertical slices",
+    "Orders them"
+   ],
+   "example": {
+    "situation": "intent.md covers reminders, emails and a dashboard.",
+    "youType": "/slice",
+    "whatHappens": [
+     "It finds 3 slices.",
+     "It orders them."
+    ],
+    "youGet": "A list of slices, smallest first."
+   },
+   "behindTheScenes": [
+    [
+     "/slice",
+     "slices",
+     "ordered list"
+    ]
+   ],
+   "next": [
+    "design-review"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "estimate": {
+   "name": "estimate",
+   "command": "/estimate",
+   "trigger": "how long?",
+   "platforms": [
+    "claude-code"
+   ],
+   "when": [
+    "When someone asks **how long** it will take → [[estimate]]"
+   ],
+   "whatItIs": "Gives a rough **size** per slice, with what it assumes.",
+   "howItWorks": [
+    "Reads the slices",
+    "Sizes each one",
+    "Lists the risks"
+   ],
+   "example": {
+    "situation": "You have 3 slices.",
+    "youType": "/estimate",
+    "whatHappens": [
+     "It sizes each slice.",
+     "It lists the risks."
+    ],
+    "youGet": "S/M/L per slice and the top risks."
+   },
+   "behindTheScenes": [
+    [
+     "/estimate",
+     "sizes",
+     "risks"
+    ]
+   ],
+   "next": [
+    "design-review"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "design-review": {
+   "name": "design-review",
+   "command": "/design-review",
+   "trigger": "check the shape",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When the **approach is chosen** and ==you want a second opinion== → [[design-review]]"
+   ],
+   "whatItIs": "A fresh reviewer **pokes holes** in the approach before any code.",
+   "howItWorks": [
+    "Reads the slices",
+    "Looks for hidden coupling",
+    "Reports risks"
+   ],
+   "example": {
+    "situation": "You plan to store reminders in the user table.",
+    "youType": "/design-review",
+    "whatHappens": [
+     "It reads the plan.",
+     "It spots a coupling.",
+     "It suggests a separate table."
+    ],
+    "youGet": "A short risk list."
+   },
+   "behindTheScenes": [
+    [
+     "/design-review",
+     "reads plan",
+     "risks"
+    ]
+   ],
+   "next": [
+    "interface"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "interface": {
+   "name": "interface",
+   "command": "/interface",
+   "trigger": "design the seams",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When you must **agree the shape** of a module before building → [[interface]]"
+   ],
+   "whatItIs": "Designs the **small public surface** of a module.",
+   "howItWorks": [
+    "Lists what callers need",
+    "Hides the rest",
+    "Writes the signatures"
+   ],
+   "example": {
+    "situation": "A reminders module needs a public API.",
+    "youType": "/interface reminders",
+    "whatHappens": [
+     "It lists callers.",
+     "It drafts 3 functions."
+    ],
+    "youGet": "A short interface sketch."
+   },
+   "behindTheScenes": [
+    [
+     "/interface",
+     "callers",
+     "signatures"
+    ]
+   ],
+   "next": [
+    "tdd"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "tdd": {
+   "name": "tdd",
+   "command": "/tdd",
+   "trigger": "test first",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When you build a **new behavior** and ==want it proven== → [[tdd]]",
+    "When fixing a **bug** → [[tdd]] reproduces it first"
+   ],
+   "whatItIs": "Writes a **failing test first**, then the code that passes it.",
+   "howItWorks": [
+    "Writes one failing test",
+    "Writes the smallest code",
+    "Refactors"
+   ],
+   "example": {
+    "situation": "Reminders must stop after payment.",
+    "youType": "/tdd stop reminders after payment",
+    "whatHappens": [
+     "It writes a failing test.",
+     "It makes it pass.",
+     "It cleans up."
+    ],
+    "youGet": "A tested change."
+   },
+   "behindTheScenes": [
+    [
+     "/tdd",
+     "red",
+     "green",
+     "refactor"
+    ]
+   ],
+   "next": [
+    "refactor"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "refactor": {
+   "name": "refactor",
+   "command": "/refactor",
+   "trigger": "clean it up",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When it **works but is messy** → [[refactor]]"
+   ],
+   "whatItIs": "Improves structure **without changing behavior**.",
+   "howItWorks": [
+    "Runs the tests",
+    "Makes small moves",
+    "Runs the tests again"
+   ],
+   "example": {
+    "situation": "The reminders file is 400 lines.",
+    "youType": "/refactor reminders",
+    "whatHappens": [
+     "It runs tests.",
+     "It splits the file.",
+     "It reruns tests."
+    ],
+    "youGet": "Same behavior, cleaner code."
+   },
+   "behindTheScenes": [
+    [
+     "/refactor",
+     "tests",
+     "small moves",
+     "tests"
+    ]
+   ],
+   "next": [
+    "review"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "review": {
+   "name": "review",
+   "command": "/review",
+   "trigger": "before merge",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When a change is **ready to merge** → [[review]]"
+   ],
+   "whatItIs": "Reviews the diff for **bugs and clarity**.",
+   "howItWorks": [
+    "Reads the diff",
+    "Flags bugs and noise",
+    "Writes comments"
+   ],
+   "example": {
+    "situation": "A PR is open.",
+    "youType": "/review",
+    "whatHappens": [
+     "It reads the diff.",
+     "It flags 2 issues."
+    ],
+    "youGet": "A short review."
+   },
+   "behindTheScenes": [
+    [
+     "/review",
+     "reads diff",
+     "comments"
+    ]
+   ],
+   "next": [
+    "e2e"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "e2e": {
+   "name": "e2e",
+   "command": "/e2e",
+   "trigger": "test the flow",
+   "platforms": [
+    "claude-code"
+   ],
+   "when": [
+    "When a **whole user flow** must keep working → [[e2e]]"
+   ],
+   "whatItIs": "Writes an **end-to-end test** for one user flow.",
+   "howItWorks": [
+    "Picks the flow",
+    "Drives a real browser",
+    "Asserts the result"
+   ],
+   "example": {
+    "situation": "Checkout must keep working.",
+    "youType": "/e2e checkout",
+    "whatHappens": [
+     "It opens the app.",
+     "It buys an item."
+    ],
+    "youGet": "A passing e2e test."
+   },
+   "behindTheScenes": [
+    [
+     "/e2e",
+     "browser",
+     "assert"
+    ]
+   ],
+   "next": [
+    "verify"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "verify": {
+   "name": "verify",
+   "command": "/verify",
+   "trigger": "prove it works",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When you say **done** and ==want proof== → [[verify]]"
+   ],
+   "whatItIs": "Runs the checks and **shows evidence** it works.",
+   "howItWorks": [
+    "Runs tests and the app",
+    "Collects output",
+    "Reports pass or fail"
+   ],
+   "example": {
+    "situation": "A feature is built.",
+    "youType": "/verify",
+    "whatHappens": [
+     "It runs tests.",
+     "It runs the app."
+    ],
+    "youGet": "Evidence, not a claim."
+   },
+   "behindTheScenes": [
+    [
+     "/verify",
+     "runs",
+     "evidence"
+    ]
+   ],
+   "next": [
+    "triage"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "triage": {
+   "name": "triage",
+   "command": "/triage",
+   "trigger": "new bug",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When a **bug report** arrives → [[triage]]"
+   ],
+   "whatItIs": "Sorts a bug report into **fix now, later or not a bug**.",
+   "howItWorks": [
+    "Reads the report",
+    "Tries to reproduce",
+    "Labels it"
+   ],
+   "example": {
+    "situation": "Users report duplicate emails.",
+    "youType": "/triage duplicate emails",
+    "whatHappens": [
+     "It reproduces it.",
+     "It labels it urgent."
+    ],
+    "youGet": "A labeled ticket."
+   },
+   "behindTheScenes": [
+    [
+     "/triage",
+     "reproduce",
+     "label"
+    ]
+   ],
+   "next": [
+    "postmortem"
+   ],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "postmortem": {
+   "name": "postmortem",
+   "command": "/postmortem",
+   "trigger": "what went wrong",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When an **incident is over** → [[postmortem]]"
+   ],
+   "whatItIs": "Writes a **blameless summary** of what happened and what to change.",
+   "howItWorks": [
+    "Collects the timeline",
+    "Finds the cause",
+    "Lists actions"
+   ],
+   "example": {
+    "situation": "An outage lasted 20 minutes.",
+    "youType": "/postmortem",
+    "whatHappens": [
+     "It builds a timeline.",
+     "It lists 3 actions."
+    ],
+    "youGet": "A short postmortem."
+   },
+   "behindTheScenes": [
+    [
+     "/postmortem",
+     "timeline",
+     "actions"
+    ]
+   ],
+   "next": [],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "glossary": {
+   "name": "glossary",
+   "command": "/glossary",
+   "trigger": "name things",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When **names drift** across the code and docs → [[glossary]]"
+   ],
+   "whatItIs": "Keeps one **shared vocabulary** for the project.",
+   "howItWorks": [
+    "Scans names",
+    "Finds clashes",
+    "Writes the glossary"
+   ],
+   "example": {
+    "situation": "The code says user, member and customer.",
+    "youType": "/glossary",
+    "whatHappens": [
+     "It lists the clashes.",
+     "It picks one name."
+    ],
+    "youGet": "A glossary file."
+   },
+   "behindTheScenes": [
+    [
+     "/glossary",
+     "scan",
+     "clashes",
+     "file"
+    ]
+   ],
+   "next": [],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  },
+  "zoom-out": {
+   "name": "zoom-out",
+   "command": "/zoom-out",
+   "trigger": "big picture",
+   "platforms": [
+    "claude-code",
+    "cursor"
+   ],
+   "when": [
+    "When you are **lost in details** → [[zoom-out]]"
+   ],
+   "whatItIs": "Steps back and explains **how the part fits the whole**.",
+   "howItWorks": [
+    "Reads the area",
+    "Explains in plain words"
+   ],
+   "example": {
+    "situation": "You opened a file you do not know.",
+    "youType": "/zoom-out",
+    "whatHappens": [
+     "It reads the area.",
+     "It explains it."
+    ],
+    "youGet": "A plain-words overview."
+   },
+   "behindTheScenes": [
+    [
+     "/zoom-out",
+     "read",
+     "explain"
+    ]
+   ],
+   "next": [],
+   "sources": [
+    {
+     "label": "Sample skill pack docs",
+     "url": "https://example.com/sample-pack"
+    }
+   ]
+  }
+ }
+}

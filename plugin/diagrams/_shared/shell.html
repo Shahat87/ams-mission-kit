@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>%%TITLE%%</title>
+%%FAV%%
+<style>
+%%SHELLCSS%%
+%%SMCSS%%
+%%PAGECSS%%
+</style></head><body>
+%%NAV%%
+<main class="sm-main">
+<div class="sm-head">%%PLOGO%%<h1>%%TITLE%%</h1><span class="vpill">%%VERSION%%</span></div>
+<p class="sm-sub">%%SUBTITLE%%</p>
+<div class="sm-hero" id="hero"><div class="tb"><input type="search" id="q" placeholder="Search" aria-label="Search">%%FILTER%%<span class="sp2"></span>%%TOOLS%%<span class="cvc" id="cvc" hidden><button type="button" class="tbb sq" id="cv-out" aria-label="Zoom out">−</button><button type="button" class="tbb sq" id="cv-in" aria-label="Zoom in">+</button><button type="button" class="tbb" id="cv-fit">Fit</button><button type="button" class="tbb" id="cv-reset">Reset layout</button></span><button type="button" class="tbb" id="cv-col" aria-label="Collapse all groups">Collapse all</button><button type="button" class="tbb" id="cv-on" aria-pressed="false" title="Pan, zoom and rearrange the map">Canvas</button><button type="button" class="tbb" id="fsb" aria-label="Full screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span id="fst">Full screen</span></button></div>
+<div class="fpill" id="fpill" hidden></div>
+<div class="scroll" id="sc">%%SVG%%</div>
+%%LEGEND%%
+<dialog id="pop" aria-label="Details"></dialog></div>
+<h2>Best-practice order</h2>
+<div class="sm-order">%%ORDER%%</div>
+<footer class="sm-foot">%%FOOTER%%</footer>
+</main>
+<script>
+%%SMJS%%
+var SMPAGE=null;
+%%PAGEJS%%
+%%SHELLJS%%
+%%CANVASJS%%
+</script></body></html>

@@ -1,0 +1,2445 @@
+{
+ "meta": {
+  "id": "mattpocock",
+  "name": "Matt Pocock skills map",
+  "version": "mattpocock-skills v1.3.1 (plugin.json), commit 49dd158",
+  "tagline": "Skills for real engineers: small, composable, not vibe coding.",
+  "authors": "Matt Pocock (@mattpocock)",
+  "sources": [
+   {
+    "label": "mattpocock/skills (GitHub)",
+    "url": "https://github.com/mattpocock/skills"
+   },
+   {
+    "label": "README (overview and reference)",
+    "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+   },
+   {
+    "label": "ask-matt SKILL.md (router and flows)",
+    "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+   },
+   {
+    "label": "plugin.json manifest (27 skills)",
+    "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/.claude-plugin/plugin.json"
+   },
+   {
+    "label": "Docs pages",
+    "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/ask-matt.md"
+   },
+   {
+    "label": "Gary Chen: 1.3 update breakdown (YouTube, zh-TW)",
+    "url": "https://youtu.be/QqhyqMvdx5Q"
+   }
+  ],
+  "countNote": "27 skills in the plugin.json manifest (20 engineering + 7 productivity). Skipped: skills/misc/*, skills/in-progress/* (not in the manifest; the misc ones are frozen per .out-of-scope/frozen-misc-skills.md).",
+  "nav": "mattpocock",
+  "logo": ""
+ },
+ "stages": [
+  {
+   "id": "plan",
+   "name": "Plan",
+   "coverage": "full",
+   "principle": "Matt's pack is **built for this stage**. The rule: ==agree what to build before any code==, using hard interviews, then write it down.",
+   "when": [
+    "When an idea is fuzzy → you are in Plan: start with /grill-with-docs",
+    "When the answer is in someone else's head → you are in Plan: /to-questionnaire",
+    "When the job is too big for one session → you are in Plan: /wayfinder"
+   ],
+   "sources": [
+    {
+     "label": "README (#1 The agent didn't do what I want)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (The main flow)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "grilling SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/grilling/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "design",
+   "name": "Design",
+   "coverage": "full",
+   "principle": "Settle the **shape** before building: answer questions with throwaway code, and fix the project's **words** and **modules**. ==Words first, shape second.==",
+   "when": [
+    "When a question needs a runnable answer → you are in Design: /prototype",
+    "When a word means two things → you are in Design: /domain-modeling",
+    "When a module's shape is unclear → you are in Design: /codebase-design"
+   ],
+   "sources": [
+    {
+     "label": "README (#2 and #4)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 2)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Vocabulary underneath)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "build",
+   "name": "Build",
+   "coverage": "full",
+   "principle": "Build in **small test-first steps**. ==Tests come first, one slice at a time.== Bugs get a feedback loop before any guess.",
+   "when": [
+    "When you have a ticket → you are in Build: /implement",
+    "When you have a whole spec → you are in Build: /implement-spec",
+    "When a hard bug appears → you are in Build: /diagnosing-bugs"
+   ],
+   "sources": [
+    {
+     "label": "README (#3 The code doesn't work)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (On-ramps, diagnosing-bugs)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "test",
+   "name": "Test",
+   "coverage": "partial",
+   "principle": "Testing itself happens **inside Build** (/tdd). This stage is the **review**: ==check the whole change against standards and the spec==.",
+   "when": [
+    "When a branch is done → you are in Test: /code-review",
+    "When /implement finishes → /code-review already runs for you"
+   ],
+   "gap": "No separate QA, e2e or browser-testing skill. Tests live in /tdd (Build). The review is /code-review.",
+   "sources": [
+    {
+     "label": "code-review SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/code-review/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "deploy",
+   "name": "Deploy",
+   "coverage": "partial",
+   "principle": "Get the change out: a clear **pull request**, and a script for the ==steps only a human can do==.",
+   "when": [
+    "When you open a pull request → you are in Deploy: /pr",
+    "When you must set secrets or do a cutover by hand → you are in Deploy: /wizard"
+   ],
+   "gap": "No CI/CD, release, or rollout skill. /pr and /wizard are the only shipping helpers.",
+   "sources": [
+    {
+     "label": "pr SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/pr/SKILL.md"
+    },
+    {
+     "label": "wizard SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/wizard/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow, /pr)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "maintain",
+   "name": "Maintain",
+   "coverage": "partial",
+   "principle": "Keep it healthy: **sort new issues**, **learn from sessions**, and ==check the code's shape every few days==.",
+   "when": [
+    "When issues pile up → you are in Maintain: /triage",
+    "When a session went badly → you are in Maintain: /retro",
+    "When you have spare time → you are in Maintain: /improve-codebase-architecture"
+   ],
+   "gap": "No monitoring, logs, metrics or incident skill. Maintenance is about issues, agent setup and code shape.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (On-ramps: triage)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Codebase health)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 4)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  }
+ ],
+ "categories": [
+  {
+   "id": "get-answers",
+   "stage": "plan",
+   "name": "Get answers you lack",
+   "blurb": "Look things up, or ask the person who knows.",
+   "principle": "If the answer is **not in your head**, go get it. ==Facts are the agent's job; decisions are yours.==",
+   "when": [
+    "When you need facts from docs or code → start with research",
+    "When the answer is in someone else's head → start with to-questionnaire"
+   ],
+   "chain": [
+    "research",
+    "to-questionnaire"
+   ],
+   "chainWhy": "Both are standalone and feed /grill-with-docs (ask-matt Standalone). The two are independent; their order here is inferred.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (Standalone: /research, /to-questionnaire)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "research SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/research/SKILL.md"
+    },
+    {
+     "label": "to-questionnaire SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/to-questionnaire/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "inferred"
+  },
+  {
+   "id": "idea-to-tickets",
+   "stage": "plan",
+   "name": "Sharpen the idea into tickets",
+   "blurb": "The main flow: grill, write the spec, split into tickets.",
+   "principle": "One unbroken thread: ==grill → spec → tickets==. Keep one context window until the tickets exist.",
+   "when": [
+    "When you have an idea in a repo → start with grill-with-docs",
+    "When the grilling is done and the build spans sessions → to-spec",
+    "When you have a spec → to-tickets"
+   ],
+   "chain": [
+    "grill-with-docs",
+    "to-spec",
+    "to-tickets"
+   ],
+   "chainWhy": "ask-matt main flow steps 1 and 3 give this order. Context hygiene says do not compact or clear until after /to-tickets (ask-matt L36-38).",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (main flow L15-34)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Context hygiene L36-40)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "grill-with-docs SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/grill-with-docs/SKILL.md"
+    },
+    {
+     "label": "to-spec SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/to-spec/SKILL.md"
+    },
+    {
+     "label": "to-tickets SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/to-tickets/SKILL.md"
+    }
+   ],
+   "nodeCount": 3,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "chart-huge",
+   "stage": "plan",
+   "name": "Chart a huge foggy job",
+   "blurb": "For work too big for one session.",
+   "principle": "When the way is not visible, ==make decisions first, build later==. Hand off to /to-spec.",
+   "when": [
+    "When the job is too big for one session → start with wayfinder",
+    "When the map is clear → to-spec"
+   ],
+   "chain": [
+    "wayfinder",
+    "to-spec"
+   ],
+   "chainWhy": "ask-matt L52-54: when the map clears, it hands off at /to-spec, not /implement.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (On-ramps, wayfinder L52-54)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "wayfinder SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/wayfinder/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "try-throwaway",
+   "stage": "design",
+   "name": "Try it with throwaway code",
+   "blurb": "Answer a design question by building a quick demo.",
+   "principle": "When a question can't be settled by talking, ==build a cheap thing and look at it==.",
+   "when": [
+    "When a question needs a runnable answer → hand off, then prototype",
+    "When the prototype answers it → hand the lesson back"
+   ],
+   "chain": [
+    "handoff",
+    "prototype"
+   ],
+   "chainWhy": "ask-matt step 2 (L20-23): handoff out, prototype, handoff back. The chain shows the first two; the return handoff is the third step.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (main flow step 2 L20-23)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "handoff SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/handoff/SKILL.md"
+    },
+    {
+     "label": "prototype SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/prototype/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "words-and-shape",
+   "stage": "design",
+   "name": "Pick the words and the shape",
+   "blurb": "Clean up the project's words and its modules.",
+   "principle": "Good names and deep modules make everything after easier. ==Words first, shape second.==",
+   "when": [
+    "When a word means two things → start with domain-modeling",
+    "When a module's shape is unclear → codebase-design"
+   ],
+   "chain": [
+    "domain-modeling",
+    "codebase-design"
+   ],
+   "chainWhy": "Both sit 'underneath' other skills (ask-matt L62-67). Order is inferred: the glossary words name the seams.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (Vocabulary underneath L62-67)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "domain-modeling SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md"
+    },
+    {
+     "label": "codebase-design SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/codebase-design/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "inferred"
+  },
+  {
+   "id": "build-one",
+   "stage": "build",
+   "name": "Build one piece",
+   "blurb": "One ticket or one small job, test-first.",
+   "principle": "Build **one slice at a time** and review before commit. ==Clear the context between tickets.==",
+   "when": [
+    "When you have a ticket or small job → start with implement",
+    "When you want only test-first code → use tdd alone"
+   ],
+   "chain": [
+    "implement",
+    "tdd"
+   ],
+   "chainWhy": "implement/SKILL.md L11: calls tdd where possible, at pre-agreed seams.",
+   "sources": [
+    {
+     "label": "implement SKILL.md (L11-17)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/implement/SKILL.md"
+    },
+    {
+     "label": "tdd SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/tdd/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow L26-30)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "build-spec",
+   "stage": "build",
+   "name": "Build the whole spec",
+   "blurb": "Parallel helpers on one integration branch.",
+   "principle": "Treat tickets as a **graph**, not a list. ==Run everything ready at once.==",
+   "when": [
+    "When you want to orchestrate the whole spec → start with implement-spec"
+   ],
+   "chain": [
+    "implement-spec",
+    "tdd"
+   ],
+   "chainWhy": "implement-spec/SKILL.md L29: each implementer calls tdd for its ticket.",
+   "sources": [
+    {
+     "label": "implement-spec SKILL.md (L27-36)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/implement-spec/SKILL.md"
+    },
+    {
+     "label": "tdd SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/tdd/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "fix-bug",
+   "stage": "build",
+   "name": "Fix a hard bug",
+   "blurb": "Make the bug fail on demand, then fix it.",
+   "principle": "Don't guess. ==First make a tight loop that goes red on this bug.==",
+   "when": [
+    "When a bug resists a first look → start with diagnosing-bugs",
+    "When the cause is found → add the regression test with tdd"
+   ],
+   "chain": [
+    "diagnosing-bugs",
+    "tdd"
+   ],
+   "chainWhy": "diagnosing-bugs Phase 5 (L114) fixes with a regression test. Naming tdd as the next step is inferred.",
+   "sources": [
+    {
+     "label": "diagnosing-bugs SKILL.md (L18-130)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/diagnosing-bugs/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (On-ramps L50)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "inferred"
+  },
+  {
+   "id": "review-change",
+   "stage": "test",
+   "name": "Check the change",
+   "blurb": "Review the diff against standards and spec.",
+   "principle": "Review with fresh eyes. ==Two reviewers, two questions: follows the standards? matches the spec?==",
+   "when": [
+    "When a branch or PR needs review → start with code-review"
+   ],
+   "chain": [
+    "code-review"
+   ],
+   "chainWhy": "One skill. /implement and /implement-spec call it for you (implement L15; implement-spec L36).",
+   "sources": [
+    {
+     "label": "code-review SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/code-review/SKILL.md"
+    },
+    {
+     "label": "implement SKILL.md (L15)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/implement/SKILL.md"
+    }
+   ],
+   "nodeCount": 1,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "open-pr",
+   "stage": "deploy",
+   "name": "Open the pull request",
+   "blurb": "A clear PR body with proof.",
+   "principle": "A PR should show **what changed, that it works, and how risky it is**. ==Smallest picture that makes it clear.==",
+   "when": [
+    "When you open a pull request → use pr"
+   ],
+   "chain": [
+    "pr"
+   ],
+   "chainWhy": "One skill; model-invoked whenever a PR is written (ask-matt L32).",
+   "sources": [
+    {
+     "label": "pr SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/pr/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow L32)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "nodeCount": 1,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "human-steps",
+   "stage": "deploy",
+   "name": "Do the human-only steps",
+   "blurb": "Scripts for secrets, dashboards and cutovers.",
+   "principle": "If only a human can do it, ==give them a wizard==, not an essay.",
+   "when": [
+    "When you must set secrets or credentials → use wizard",
+    "When a one-off migration needs a human → use wizard"
+   ],
+   "chain": [
+    "wizard"
+   ],
+   "chainWhy": "One skill; model-invoked when the agent hits a wall only you can pass (ask-matt L90).",
+   "sources": [
+    {
+     "label": "wizard SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/wizard/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Standalone L90)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "nodeCount": 1,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "sort-issues",
+   "stage": "maintain",
+   "name": "Sort new issues",
+   "blurb": "Turn raw reports into agent-ready work.",
+   "principle": "Raw reports need a **label and a brief**. ==Only triage issues you didn't create.==",
+   "when": [
+    "When bugs and requests pile up → use triage",
+    "When an issue is ready-for-agent → implement"
+   ],
+   "chain": [
+    "triage",
+    "implement"
+   ],
+   "chainWhy": "ask-matt L46: triage produces agent-ready issues that /implement later picks up.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (On-ramps L46-48)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "triage SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/triage/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "sourced"
+  },
+  {
+   "id": "learn-and-tidy",
+   "stage": "maintain",
+   "name": "Look back and tidy up",
+   "blurb": "Improve the agent's setup and the code's shape.",
+   "principle": "After a session, **fix the environment**; every few days, ==fix the code's shape==.",
+   "when": [
+    "When a session went badly or a bug is fixed → start with retro",
+    "When retro says there is no good seam → improve-codebase-architecture"
+   ],
+   "chain": [
+    "retro",
+    "improve-codebase-architecture"
+   ],
+   "chainWhy": "ask-matt L50: after a fix, run /retro; if the finding is a missing seam, that is a job for /improve-codebase-architecture.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (main flow step 4 L34)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (On-ramps L50)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Codebase health L60)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "retro SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md"
+    },
+    {
+     "label": "improve-codebase-architecture SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/improve-codebase-architecture/SKILL.md"
+    }
+   ],
+   "nodeCount": 2,
+   "chainInferred": "sourced"
+  }
+ ],
+ "anytime": [
+  {
+   "id": "router",
+   "name": "Router",
+   "blurb": "The front door. Tell it your situation and it names the skills.",
+   "items": [
+    "ask-matt"
+   ]
+  },
+  {
+   "id": "setup",
+   "name": "Set up once",
+   "blurb": "Run once per repo before the engineering skills.",
+   "items": [
+    "setup-matt-pocock-skills"
+   ]
+  },
+  {
+   "id": "interview",
+   "name": "Interview and re-explain",
+   "blurb": "Hard questions in, plain words out. Used inside many other skills.",
+   "items": [
+    "grilling",
+    "grill-me",
+    "wait-what"
+   ]
+  },
+  {
+   "id": "learn-write",
+   "name": "Learn and write",
+   "blurb": "Learn a topic; write docs agents can read.",
+   "items": [
+    "teach",
+    "writing-for-agents"
+   ]
+  }
+ ],
+ "skills": {
+  "ask-matt": {
+   "name": "ask-matt",
+   "command": "/ask-matt",
+   "trigger": "route you to right skill",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you **do not remember** which skill to use → [[ask-matt]]",
+    "When you have an idea and want it **built, end to end** → [[ask-matt]]",
+    "When you are **stuck between** two flows and want a ==pick== for your situation → [[ask-matt]]"
+   ],
+   "whatItIs": "It is the **front desk**. You tell it your situation and it points you to the right skill or flow.",
+   "howItWorks": [
+    "It knows one **main flow**: idea → grill → (prototype) → spec → tickets → implement → review → retro",
+    "It knows **on-ramps**: triage, diagnosing-bugs, wayfinder",
+    "It reads the skill's own file **before** it recommends or skips a step",
+    "It also says when to **continue, clear, handoff, use a subagent, or compact**"
+   ],
+   "example": {
+    "situation": "You have a half-formed idea for a new billing page and no idea where to start.",
+    "youType": "/ask-matt I want to add a billing page. Where do I start?",
+    "whatHappens": [
+     "It checks it is a repo, so it picks /grill-with-docs (not /grill-me).",
+     "It asks whether any question needs a runnable answer, which would mean a prototype.",
+     "It asks if the build is multi-session, which would mean /to-spec then /to-tickets."
+    ],
+    "youGet": "A short **path** of skills to run, in order, for your job."
+   },
+   "behindTheScenes": [
+    [
+     "/ask-matt",
+     "read your situation",
+     "pick main flow, on-ramp, or standalone"
+    ],
+    [
+     "main flow",
+     "/grill-with-docs",
+     "/to-spec",
+     "/to-tickets",
+     "/implement or /implement-spec",
+     "/retro"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "grill-with-docs"
+   ],
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "ask-matt docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/ask-matt.md"
+    },
+    {
+     "label": "PHASE-BOUNDARIES.md (five-option tree)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/PHASE-BOUNDARIES.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "setup-matt-pocock-skills": {
+   "name": "setup-matt-pocock-skills",
+   "command": "/setup-matt-pocock-skills",
+   "trigger": "tell skills where docs live",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you **install the pack** in a new repo → [[setup-matt-pocock-skills]]",
+    "When you want to **switch issue trackers** → [[setup-matt-pocock-skills]]",
+    "When a skill says ==\"run setup\"== because it has no tracker → [[setup-matt-pocock-skills]]"
+   ],
+   "whatItIs": "A **one-time setup**. It tells the other skills where your tickets, labels and docs live.",
+   "howItWorks": [
+    "It asks which **issue tracker** you use: GitHub, GitLab, local files, or your own",
+    "It asks what **labels** you put on tickets (only if triage is installed)",
+    "It asks where **domain docs** go: one context or several",
+    "It writes notes into `docs/agents/*.md` and a short pointer in your agent file"
+   ],
+   "example": {
+    "situation": "Fresh repo, you just installed the pack.",
+    "youType": "/setup-matt-pocock-skills",
+    "whatHappens": [
+     "It asks GitHub or local files.",
+     "It asks your label names.",
+     "It writes the answers down."
+    ],
+    "youGet": "`docs/agents/issue-tracker.md`, `domain.md`, and `triage-labels.md`, which the other skills read."
+   },
+   "behindTheScenes": [
+    [
+     "/setup-matt-pocock-skills",
+     "ask tracker",
+     "ask labels",
+     "ask doc layout",
+     "write docs/agents/*.md"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "grill-with-docs"
+   ],
+   "sources": [
+    {
+     "label": "setup-matt-pocock-skills SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/setup-matt-pocock-skills/SKILL.md"
+    },
+    {
+     "label": "setup-matt-pocock-skills docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/setup-matt-pocock-skills.md"
+    },
+    {
+     "label": "README (step 2)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "grilling": {
+   "name": "grilling",
+   "command": "/grilling",
+   "trigger": "interview you in hard rounds",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you want the **raw interview** with no wrapper → [[grilling]]",
+    "When another skill needs to **stress-test a plan** → [[grilling]]",
+    "When you say ==\"grill me\"== and name no special mode → [[grilling]]"
+   ],
+   "whatItIs": "The **interview engine**. It asks hard questions, in rounds, until nothing is left unsaid.",
+   "howItWorks": [
+    "It draws a **tree** of decisions; each answer opens new questions",
+    "Each round it asks every question it can ask **right now**, with its own suggested answer",
+    "It looks up **facts** itself; you only decide",
+    "It stops when **no questions are left**, then waits for your OK"
+   ],
+   "example": {
+    "situation": "You are unsure how a feature should work.",
+    "youType": "/grilling the new export feature",
+    "whatHappens": [
+     "Round 1: 5 numbered questions, each with a suggested answer.",
+     "You say yes or fix a few.",
+     "Round 2 only asks what the answers unlocked."
+    ],
+    "youGet": "A plan with **every branch settled**."
+   },
+   "behindTheScenes": [
+    [
+     "/grilling",
+     "round of questions",
+     "your answers",
+     "new frontier",
+     "repeat until empty"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "to-spec"
+   ],
+   "sources": [
+    {
+     "label": "grilling SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/grilling/SKILL.md"
+    },
+    {
+     "label": "grilling docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/grilling.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "grill-me": {
+   "name": "grill-me",
+   "command": "/grill-me",
+   "trigger": "grill you, write no files",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you have **no working folder** and want a plan sharpened → [[grill-me]]",
+    "When you plan a **talk, essay, or decision**, not code → [[grill-me]]",
+    "When you want the grill but ==save nothing== → [[grill-me]]"
+   ],
+   "whatItIs": "The **stateless grill**. Same hard interview, but it writes no files.",
+   "howItWorks": [
+    "It just runs the **grilling** skill",
+    "It builds **no glossary** and keeps no notes",
+    "Use /grill-with-docs instead when a repo exists"
+   ],
+   "example": {
+    "situation": "You are planning a conference talk, not code.",
+    "youType": "/grill-me my talk on agent skills",
+    "whatHappens": [
+     "It asks the frontier questions with suggested answers.",
+     "You answer in rounds."
+    ],
+    "youGet": "A **sharper plan** in the chat only."
+   },
+   "behindTheScenes": [
+    [
+     "/grill-me",
+     "calls grilling"
+    ]
+   ],
+   "calls": [
+    "grilling"
+   ],
+   "next": [],
+   "sources": [
+    {
+     "label": "grill-me SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/grill-me/SKILL.md"
+    },
+    {
+     "label": "grill-me docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/grill-me.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Standalone)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "wait-what": {
+   "name": "wait-what",
+   "command": "/wait-what",
+   "trigger": "re-explain last message simply",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When the agent's last message used **words you do not know** → [[wait-what]]",
+    "When you say ==\"huh?\"== mid-skill → [[wait-what]]",
+    "When jargon is **piling up** → [[wait-what]]"
+   ],
+   "whatItIs": "The **\"say that again, simply\"** button.",
+   "howItWorks": [
+    "You fire it right after a confusing message",
+    "The agent **re-pitches** the same point with the missing context",
+    "It uses plain English and your `GLOSSARY.md` words"
+   ],
+   "example": {
+    "situation": "The agent said \"the materialization cascade breaks idempotency\".",
+    "youType": "/wait-what",
+    "whatHappens": [
+     "It explains the term using your glossary.",
+     "It re-says the point in plain words."
+    ],
+    "youGet": "The **same message**, now understandable."
+   },
+   "behindTheScenes": [
+    [
+     "confusing message",
+     "/wait-what",
+     "plain re-pitch using GLOSSARY.md"
+    ]
+   ],
+   "calls": [],
+   "next": [],
+   "sources": [
+    {
+     "label": "wait-what SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/wait-what/SKILL.md"
+    },
+    {
+     "label": "wait-what docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/wait-what.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "teach": {
+   "name": "teach",
+   "command": "/teach",
+   "trigger": "tutor you on a topic",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you want to **learn a concept** over several days → [[teach]]",
+    "When you want a **stateful** study folder → [[teach]]",
+    "When you ==learn by doing== rather than reading → [[teach]]"
+   ],
+   "whatItIs": "A **tutor** that uses the current folder as your study workspace and remembers where you left off.",
+   "howItWorks": [
+    "It keeps the lesson state in the folder",
+    "Each session picks up from the last",
+    "It checks what you understood before moving on"
+   ],
+   "example": {
+    "situation": "You want to learn Rust ownership properly.",
+    "youType": "/teach Rust ownership",
+    "whatHappens": [
+     "It starts a workspace in the folder.",
+     "It teaches a bit and checks you.",
+     "Next session it resumes."
+    ],
+    "youGet": "A **study folder** with progress you can resume."
+   },
+   "behindTheScenes": [
+    [
+     "/teach",
+     "read workspace state",
+     "teach a step",
+     "check understanding",
+     "save state"
+    ]
+   ],
+   "calls": [],
+   "next": [],
+   "sources": [
+    {
+     "label": "teach SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/teach/SKILL.md"
+    },
+    {
+     "label": "teach docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/teach.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "writing-for-agents": {
+   "name": "writing-for-agents",
+   "command": "/writing-for-agents",
+   "trigger": "write docs agents can read",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you **write or edit a skill** → [[writing-for-agents]]",
+    "When you change **AGENTS.md or CLAUDE.md** → [[writing-for-agents]]",
+    "When an agent reads a doc because ==another file points to it== → [[writing-for-agents]]"
+   ],
+   "whatItIs": "A **style guide** for writing things an agent will read.",
+   "howItWorks": [
+    "It is model-invoked, so the agent loads it by itself while writing agent docs",
+    "It says what to put in always-loaded files and what to point to instead",
+    "/retro uses it too"
+   ],
+   "example": {
+    "situation": "Your AGENTS.md has grown to 600 lines.",
+    "youType": "edit our AGENTS.md",
+    "whatHappens": [
+     "The agent loads the guide.",
+     "It moves detail into pointed-at docs."
+    ],
+    "youGet": "A **shorter, clearer** agent file."
+   },
+   "behindTheScenes": [
+    [
+     "writing an agent doc",
+     "writing-for-agents",
+     "apply style rules"
+    ]
+   ],
+   "calls": [],
+   "next": [],
+   "sources": [
+    {
+     "label": "writing-for-agents SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/writing-for-agents/SKILL.md"
+    },
+    {
+     "label": "writing-for-agents docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/writing-for-agents.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "research": {
+   "name": "research",
+   "command": "/research",
+   "trigger": "look up cited answers",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you need **facts from official docs or source code** → [[research]]",
+    "When you want to **keep working** while it reads → [[research]]",
+    "When you want a ==cited file== to feed your grilling → [[research]]"
+   ],
+   "whatItIs": "A **background reader**. It checks the real sources and leaves a Markdown file with citations.",
+   "howItWorks": [
+    "It starts a **background agent**",
+    "The agent reads **primary sources** only: docs, source, specs",
+    "It writes one file and cites every claim",
+    "You take the file into /grill-with-docs"
+   ],
+   "example": {
+    "situation": "You are unsure how a payment API handles retries.",
+    "youType": "/research how Stripe handles webhook retries",
+    "whatHappens": [
+     "A background agent reads Stripe's docs.",
+     "It writes `research/stripe-webhooks.md` with links."
+    ],
+    "youGet": "A **cited Markdown file** in the repo."
+   },
+   "behindTheScenes": [
+    [
+     "/research",
+     "background agent",
+     "read primary sources",
+     "write cited .md"
+    ],
+    [
+     "cited .md",
+     "/grill-with-docs"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "grill-with-docs"
+   ],
+   "sources": [
+    {
+     "label": "research SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/research/SKILL.md"
+    },
+    {
+     "label": "research docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/research.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Standalone, /research)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "to-questionnaire": {
+   "name": "to-questionnaire",
+   "command": "/to-questionnaire",
+   "trigger": "turn question into expert form",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When the answer is **in someone else's head** → [[to-questionnaire]]",
+    "When you must ask a **boss, client or expert** → [[to-questionnaire]]",
+    "When you want to ==send questions== they fill in later → [[to-questionnaire]]"
+   ],
+   "whatItIs": "It turns **your open question** into a Markdown form for the one person who knows.",
+   "howItWorks": [
+    "It does **not** quiz you about the subject",
+    "It quizzes you about the **send**: who gets it, what you need back",
+    "It writes questions aimed at the gap",
+    "The answers come back as input for /grill-with-docs or /to-spec"
+   ],
+   "example": {
+    "situation": "You need pricing rules only the finance lead knows.",
+    "youType": "/to-questionnaire pricing rules for the new plan",
+    "whatHappens": [
+     "It asks who reads it and what you need.",
+     "It writes a short questionnaire."
+    ],
+    "youGet": "A **questionnaire file** ready to send."
+   },
+   "behindTheScenes": [
+    [
+     "/to-questionnaire",
+     "ask about the send",
+     "write questions"
+    ],
+    [
+     "answers",
+     "/grill-with-docs or /to-spec"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "grill-with-docs"
+   ],
+   "sources": [
+    {
+     "label": "to-questionnaire SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/to-questionnaire/SKILL.md"
+    },
+    {
+     "label": "to-questionnaire docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/to-questionnaire.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Standalone)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "grill-with-docs": {
+   "name": "grill-with-docs",
+   "command": "/grill-with-docs",
+   "trigger": "grill idea, write glossary",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you have an **idea in a repo** and want it sharp → [[grill-with-docs]]",
+    "When words in the project are **fuzzy or overloaded** → [[grill-with-docs]]",
+    "When you start ==any change== and want a paper trail → [[grill-with-docs]]"
+   ],
+   "whatItIs": "The **start of the main flow**. A hard interview that also writes your glossary and decision notes.",
+   "howItWorks": [
+    "It runs two skills: **grilling** (the questions) and **domain-modeling** (the words)",
+    "Fuzzy terms get fixed in `GLOSSARY.md`",
+    "Hard-to-undo choices become short ADR notes",
+    "Do this before spec, tickets, or code"
+   ],
+   "example": {
+    "situation": "You want \"teams\" in your app but the code already uses \"team\" for two things.",
+    "youType": "/grill-with-docs add team billing",
+    "whatHappens": [
+     "It asks round-by-round questions.",
+     "It notices \"team\" is overloaded and proposes two words.",
+     "It updates GLOSSARY.md as you agree."
+    ],
+    "youGet": "A **shared plan** plus an updated glossary and ADRs."
+   },
+   "behindTheScenes": [
+    [
+     "/grill-with-docs",
+     "calls grilling",
+     "calls domain-modeling"
+    ],
+    [
+     "agreed plan",
+     "/prototype (if needed)",
+     "/to-spec"
+    ]
+   ],
+   "calls": [
+    "grilling",
+    "domain-modeling"
+   ],
+   "next": [
+    "to-spec",
+    "prototype"
+   ],
+   "sources": [
+    {
+     "label": "grill-with-docs SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/grill-with-docs/SKILL.md"
+    },
+    {
+     "label": "grill-with-docs docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/grill-with-docs.md"
+    },
+    {
+     "label": "README (#1 and #2)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "to-spec": {
+   "name": "to-spec",
+   "command": "/to-spec",
+   "trigger": "write agreed plan as spec",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When the grilling is **done** and the build spans sessions → [[to-spec]]",
+    "When you want a **written spec** on your tracker → [[to-spec]]",
+    "When a wayfinder map is ==clear== → [[to-spec]]"
+   ],
+   "whatItIs": "It **writes down** what you already agreed as a spec. It asks no new questions.",
+   "howItWorks": [
+    "It reads the repo and uses your glossary words",
+    "It picks **test seams** (as few as one) and checks them with you",
+    "It fills a template: problem, solution, user stories, decisions, testing, out of scope",
+    "It publishes the spec labeled `ready-for-agent`"
+   ],
+   "example": {
+    "situation": "You finished grilling the billing page idea.",
+    "youType": "/to-spec",
+    "whatHappens": [
+     "It proposes one test seam.",
+     "You confirm.",
+     "It posts the spec to the tracker."
+    ],
+    "youGet": "A **spec issue** on your tracker."
+   },
+   "behindTheScenes": [
+    [
+     "/to-spec",
+     "explore repo",
+     "propose seams",
+     "you confirm",
+     "publish spec"
+    ],
+    [
+     "spec",
+     "/to-tickets"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "to-tickets"
+   ],
+   "sources": [
+    {
+     "label": "to-spec SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/to-spec/SKILL.md"
+    },
+    {
+     "label": "to-spec docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/to-spec.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "to-tickets": {
+   "name": "to-tickets",
+   "command": "/to-tickets",
+   "trigger": "slice plan into thin tickets",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you have a **spec or plan** and need small jobs → [[to-tickets]]",
+    "When work must be split so each piece **ships alone** → [[to-tickets]]",
+    "When each job must ==say what must finish first== → [[to-tickets]]"
+   ],
+   "whatItIs": "It slices a plan into **small jobs that each work end to end**, and each says what must finish first.",
+   "howItWorks": [
+    "Each ticket cuts through **every layer** and fits one fresh context",
+    "Each names the tickets that **block** it",
+    "It shows you the list and asks about size and order",
+    "On a real tracker blocking becomes native links; locally, one file per ticket"
+   ],
+   "example": {
+    "situation": "The billing spec is big.",
+    "youType": "/to-tickets",
+    "whatHappens": [
+     "It drafts 6 tickets with blockers.",
+     "You merge two.",
+     "It publishes them."
+    ],
+    "youGet": "A **set of tickets** with blocking edges."
+   },
+   "behindTheScenes": [
+    [
+     "/to-tickets",
+     "draft vertical slices",
+     "you approve",
+     "publish with blocking edges"
+    ],
+    [
+     "tickets",
+     "/implement or /implement-spec"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "implement",
+    "implement-spec"
+   ],
+   "sources": [
+    {
+     "label": "to-tickets SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/to-tickets/SKILL.md"
+    },
+    {
+     "label": "to-tickets docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/to-tickets.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "wayfinder": {
+   "name": "wayfinder",
+   "command": "/wayfinder",
+   "trigger": "map big decisions, settle each",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When the job is **too big for one session** → [[wayfinder]]",
+    "When you cannot yet **see the way** from here to done → [[wayfinder]]",
+    "When it is a ==greenfield or huge feature==, not a normal one → [[wayfinder]]"
+   ],
+   "whatItIs": "It draws a **map of decisions** on your tracker and clears them one by one. It makes decisions, not code.",
+   "howItWorks": [
+    "You name the **destination** first",
+    "It files **decision tickets**: questions, prototypes, research, tasks",
+    "You resolve them one at a time as the fog lifts",
+    "When clear it **hands off to /to-spec**, not to /implement"
+   ],
+   "example": {
+    "situation": "You must rebuild the whole auth system over weeks.",
+    "youType": "/wayfinder move us from sessions to OAuth",
+    "whatHappens": [
+     "It names the destination.",
+     "It files 12 decision tickets.",
+     "You resolve them over days."
+    ],
+    "youGet": "A **cleared map** of decisions, ready for /to-spec."
+   },
+   "behindTheScenes": [
+    [
+     "/wayfinder",
+     "chart map",
+     "decision tickets",
+     "resolve one by one"
+    ],
+    [
+     "clear map",
+     "/to-spec",
+     "/to-tickets"
+    ]
+   ],
+   "calls": [
+    "grilling",
+    "prototype",
+    "research"
+   ],
+   "next": [
+    "to-spec"
+   ],
+   "sources": [
+    {
+     "label": "wayfinder SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/wayfinder/SKILL.md"
+    },
+    {
+     "label": "wayfinder docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/wayfinder.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (on-ramps)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "triage": {
+   "name": "triage",
+   "command": "/triage",
+   "trigger": "label issues until ready",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When **bug reports pile up** → [[triage]]",
+    "When strangers file raw feature requests → [[triage]]",
+    "When you ask ==what is ready for agents?== → [[triage]]"
+   ],
+   "whatItIs": "It moves **raw issues** through simple labels until each is ready for an agent or a human.",
+   "howItWorks": [
+    "Each issue gets one **category** (bug or enhancement) and one **state**",
+    "States: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix",
+    "It checks the claim, grills you if needed, and writes an agent brief",
+    "Do not triage tickets that /to-tickets made"
+   ],
+   "example": {
+    "situation": "20 new issues arrived over the weekend.",
+    "youType": "/triage show me anything that needs my attention",
+    "whatHappens": [
+     "It lists unlabeled, stale, and waiting issues.",
+     "You pick #42.",
+     "It verifies the bug and labels ready-for-agent."
+    ],
+    "youGet": "**Labeled issues** with agent-ready briefs."
+   },
+   "behindTheScenes": [
+    [
+     "/triage",
+     "list buckets",
+     "verify",
+     "grill if needed",
+     "write agent brief",
+     "label"
+    ],
+    [
+     "ready-for-agent",
+     "/implement"
+    ]
+   ],
+   "calls": [
+    "grilling"
+   ],
+   "next": [
+    "implement"
+   ],
+   "sources": [
+    {
+     "label": "triage SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/triage/SKILL.md"
+    },
+    {
+     "label": "triage docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/triage.md"
+    },
+    {
+     "label": "triage-labels doc",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/agents/triage-labels.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (on-ramps)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "handoff": {
+   "name": "handoff",
+   "command": "/handoff",
+   "trigger": "pack chat for next agent",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you go to a **new tool, folder or person** → [[handoff]]",
+    "When you **fork a side job** mid-phase → [[handoff]]",
+    "When you want to carry a prototype's lesson ==back== → [[handoff]]"
+   ],
+   "whatItIs": "It packs the chat into a **short note** so a fresh agent can continue.",
+   "howItWorks": [
+    "It writes to your temp folder, not the repo",
+    "It lists **suggested skills** for the next agent",
+    "It points to specs, issues and commits instead of copying them",
+    "It hides secrets"
+   ],
+   "example": {
+    "situation": "You need to prototype in a new folder.",
+    "youType": "/handoff try the checkout state machine as a prototype",
+    "whatHappens": [
+     "It writes a note with context and next skills."
+    ],
+    "youGet": "A **handoff file** to open in a new session."
+   },
+   "behindTheScenes": [
+    [
+     "/handoff",
+     "summarise",
+     "point to artifacts",
+     "redact",
+     "write temp file"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "prototype"
+   ],
+   "sources": [
+    {
+     "label": "handoff SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/productivity/handoff/SKILL.md"
+    },
+    {
+     "label": "handoff docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/productivity/handoff.md"
+    },
+    {
+     "label": "PHASE-BOUNDARIES.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/PHASE-BOUNDARIES.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "prototype": {
+   "name": "prototype",
+   "command": "/prototype",
+   "trigger": "build throwaway to test idea",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When a question needs a **runnable answer** → [[prototype]]",
+    "When you wonder if a **state model feels right** → [[prototype]]",
+    "When you ask ==what should this UI look like?== → [[prototype]]"
+   ],
+   "whatItIs": "A **throwaway program** that answers one design question fast.",
+   "howItWorks": [
+    "Logic question → one **HTML file** you double-click",
+    "Look question → several **UI variations** on one route",
+    "No tests, no polish, state shown after every step",
+    "Keep it on a `prototype/<name>` branch as proof"
+   ],
+   "example": {
+    "situation": "You are not sure how a cart discount stacks.",
+    "youType": "/prototype does stacking feel right?",
+    "whatHappens": [
+     "It builds a one-file HTML demo.",
+     "You click through cases.",
+     "It records the verdict."
+    ],
+    "youGet": "A **verdict** plus a prototype kept on a branch."
+   },
+   "behindTheScenes": [
+    [
+     "/prototype",
+     "pick logic or UI branch",
+     "build throwaway",
+     "you try it",
+     "fold answer into real code"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "to-spec"
+   ],
+   "sources": [
+    {
+     "label": "prototype SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/prototype/SKILL.md"
+    },
+    {
+     "label": "prototype docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/prototype.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 2)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "domain-modeling": {
+   "name": "domain-modeling",
+   "command": "/domain-modeling",
+   "trigger": "keep glossary and decisions tidy",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When a **word means two things** → [[domain-modeling]]",
+    "When you write `GLOSSARY.md` or an ADR → [[domain-modeling]]",
+    "When you ==record a hard-to-undo decision== → [[domain-modeling]]"
+   ],
+   "whatItIs": "It keeps your project's **words** clean in a glossary and short decision notes.",
+   "howItWorks": [
+    "It challenges fuzzy terms and invents edge cases",
+    "It writes the term to `GLOSSARY.md` right away",
+    "It records big choices as ADRs in `docs/adr/`",
+    "/grill-with-docs drives it"
+   ],
+   "example": {
+    "situation": "\"Account\" means user, billing, and login.",
+    "youType": "/domain-modeling split the account word",
+    "whatHappens": [
+     "It lists the three meanings.",
+     "You name them.",
+     "It updates the glossary."
+    ],
+    "youGet": "A **cleaner glossary** and ADRs."
+   },
+   "behindTheScenes": [
+    [
+     "fuzzy term",
+     "/domain-modeling",
+     "challenge",
+     "update GLOSSARY.md or ADR"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "codebase-design"
+   ],
+   "sources": [
+    {
+     "label": "domain-modeling SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/domain-modeling/SKILL.md"
+    },
+    {
+     "label": "domain-modeling docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/domain-modeling.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Vocabulary underneath)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "codebase-design": {
+   "name": "codebase-design",
+   "command": "/codebase-design",
+   "trigger": "design small-interface deep modules",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you design a **module's interface** → [[codebase-design]]",
+    "When you decide **where pieces of code plug together** → [[codebase-design]]",
+    "When code must be easier to **test and navigate** → [[codebase-design]]"
+   ],
+   "whatItIs": "**Shared words for designing code**: put lots of behavior behind a small, simple door.",
+   "howItWorks": [
+    "It names: module, interface, depth, seam, adapter, leverage, locality",
+    "/tdd and /improve-codebase-architecture use the same words",
+    "Use it when the shape, not the process, is the problem"
+   ],
+   "example": {
+    "situation": "A module has 12 public functions.",
+    "youType": "/codebase-design is this module deep enough?",
+    "whatHappens": [
+     "It names the interface and its depth.",
+     "It suggests one seam."
+    ],
+    "youGet": "A **clearer module shape**."
+   },
+   "behindTheScenes": [
+    [
+     "design question",
+     "/codebase-design",
+     "name module, interface, seam"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "tdd"
+   ],
+   "sources": [
+    {
+     "label": "codebase-design SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/codebase-design/SKILL.md"
+    },
+    {
+     "label": "codebase-design docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/codebase-design.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Vocabulary underneath)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "implement": {
+   "name": "implement",
+   "command": "/implement",
+   "trigger": "build ticket, review, commit",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you have a **spec or ticket** and want code → [[implement]]",
+    "When the job is small enough for **one window** → [[implement]]",
+    "When you want it built ==test-first and reviewed== → [[implement]]"
+   ],
+   "whatItIs": "It **builds** a spec or one ticket, then reviews and commits.",
+   "howItWorks": [
+    "It fetches the ticket and says its title",
+    "It calls **/tdd** at pre-agreed seams",
+    "It runs types often, one test file often, the full suite once",
+    "It calls **/code-review**, then commits to the current branch"
+   ],
+   "example": {
+    "situation": "Ticket #14: add the invoice email.",
+    "youType": "/implement #14",
+    "whatHappens": [
+     "It reads the ticket.",
+     "It drives /tdd, one slice at a time.",
+     "It runs /code-review and commits."
+    ],
+    "youGet": "A **committed, reviewed change**. Use /clear before the next ticket."
+   },
+   "behindTheScenes": [
+    [
+     "/implement",
+     "fetch ticket",
+     "calls /tdd",
+     "full tests",
+     "calls /code-review",
+     "commit"
+    ]
+   ],
+   "calls": [
+    "tdd",
+    "code-review"
+   ],
+   "next": [
+    "pr",
+    "retro"
+   ],
+   "sources": [
+    {
+     "label": "implement SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/implement/SKILL.md"
+    },
+    {
+     "label": "implement docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/implement.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "implement-spec": {
+   "name": "implement-spec",
+   "command": "/implement-spec",
+   "trigger": "build whole spec with helpers",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you want the **whole spec built in one run** → [[implement-spec]]",
+    "When many tickets can go **in parallel** → [[implement-spec]]",
+    "When you would rather ==be the manager== than drive each ticket → [[implement-spec]]",
+    "When you are **looping by hand**, one ticket per prompt → [[implement-spec]]"
+   ],
+   "whatItIs": "It builds a whole plan by running **helper agents** on its tickets, in the right order, on one branch.",
+   "howItWorks": [
+    "It reads tickets as a **graph**; the ready ones are the frontier",
+    "Each helper works in its own worktree and calls **/tdd**",
+    "A merger agent lands each on one integration branch",
+    "At the end it runs **/code-review** over the whole branch and fixes issues"
+   ],
+   "example": {
+    "situation": "Spec #87 was split into tickets #88 to #97; some don't depend on each other.",
+    "youType": "/implement-spec #87",
+    "whatHappens": [
+     "It maps which tickets wait on others.",
+     "The ready ones start in parallel, each in its own worktree.",
+     "Finished work merges; new tickets unlock.",
+     "One review at the end."
+    ],
+    "youGet": "One **integration branch** (and a draft PR if your tracker wants it)."
+   },
+   "behindTheScenes": [
+    [
+     "/implement-spec",
+     "read graph",
+     "helpers per ticket (each /tdd)",
+     "merge to integration branch",
+     "/code-review",
+     "cleanup"
+    ]
+   ],
+   "calls": [
+    "tdd",
+    "code-review"
+   ],
+   "next": [
+    "pr",
+    "retro"
+   ],
+   "sources": [
+    {
+     "label": "implement-spec SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/implement-spec/SKILL.md"
+    },
+    {
+     "label": "implement-spec docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/implement-spec.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "Gary Chen: 1.3 update breakdown (YouTube, zh-TW)",
+     "url": "https://youtu.be/QqhyqMvdx5Q"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "tdd": {
+   "name": "tdd",
+   "command": "/tdd",
+   "trigger": "write failing test first",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you build a **feature or fix** test-first → [[tdd]]",
+    "When you say ==red-green-refactor== → [[tdd]]",
+    "When you want tests only at **spots you agreed on** → [[tdd]]"
+   ],
+   "whatItIs": "The **test-first rules**: write a failing test, then just enough code to pass, one small piece at a time.",
+   "howItWorks": [
+    "Agree the **seams** with you before any test",
+    "Red before green; never write all tests up front",
+    "Avoid tests tied to internals or that repeat the code's math",
+    "Cleanup belongs to review, not the loop"
+   ],
+   "example": {
+    "situation": "Add a discount rule to checkout.",
+    "youType": "/tdd discount applies over $100",
+    "whatHappens": [
+     "It proposes the checkout seam.",
+     "It writes one failing test.",
+     "It makes it pass, then next slice."
+    ],
+    "youGet": "Code with **tests that survive refactors**."
+   },
+   "behindTheScenes": [
+    [
+     "/tdd",
+     "agree seams",
+     "red test",
+     "green code",
+     "next slice"
+    ]
+   ],
+   "calls": [
+    "codebase-design"
+   ],
+   "next": [
+    "code-review"
+   ],
+   "sources": [
+    {
+     "label": "tdd SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/tdd/SKILL.md"
+    },
+    {
+     "label": "tdd docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/tdd.md"
+    },
+    {
+     "label": "README (#3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    },
+    {
+     "label": "tests.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/tdd/tests.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "diagnosing-bugs": {
+   "name": "diagnosing-bugs",
+   "command": "/diagnosing-bugs",
+   "trigger": "reproduce bug, then fix it",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When a bug **resists a first look** → [[diagnosing-bugs]]",
+    "When it fails **sometimes** (flaky) → [[diagnosing-bugs]]",
+    "When something **used to work** and now does not → [[diagnosing-bugs]]"
+   ],
+   "whatItIs": "A **step-by-step debugging loop** that refuses to guess until it has a way to make the bug fail on demand.",
+   "howItWorks": [
+    "Phase 1: build a **tight feedback loop** that goes red on this bug",
+    "Then reproduce and shrink it, make guesses, add logging",
+    "Then fix with a **regression test**, then clean up",
+    "It hides secrets in what it shows"
+   ],
+   "example": {
+    "situation": "Checkout fails about 1 time in 20.",
+    "youType": "/diagnosing-bugs checkout sometimes 500s",
+    "whatHappens": [
+     "It builds a script that loops the call.",
+     "It raises the failure rate.",
+     "It finds the cause and adds a test."
+    ],
+    "youGet": "A **fix plus a regression test**."
+   },
+   "behindTheScenes": [
+    [
+     "/diagnosing-bugs",
+     "feedback loop",
+     "reproduce",
+     "hypothesise",
+     "instrument",
+     "fix + test",
+     "cleanup"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "retro"
+   ],
+   "sources": [
+    {
+     "label": "diagnosing-bugs SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/diagnosing-bugs/SKILL.md"
+    },
+    {
+     "label": "diagnosing-bugs docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/diagnosing-bugs.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (on-ramps)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "code-review": {
+   "name": "code-review",
+   "command": "/code-review",
+   "trigger": "review diff: standards and spec",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When a **branch or PR** needs review → [[code-review]]",
+    "When /implement just finished → [[code-review]]",
+    "When you ask ==review since main== → [[code-review]]"
+   ],
+   "whatItIs": "A **two-part review** of your changes: coding standards, and does it match the spec.",
+   "howItWorks": [
+    "You give it a **fixed point** (a commit, branch or main)",
+    "It finds the spec and your written standards",
+    "Two helper agents review **in parallel**; it adds a code-smell checklist",
+    "It shows both reports side by side"
+   ],
+   "example": {
+    "situation": "Branch done, spec is issue #9.",
+    "youType": "/code-review since main",
+    "whatHappens": [
+     "It finds issue #9.",
+     "Helpers check standards and spec.",
+     "It merges the findings."
+    ],
+    "youGet": "A **two-axis review report**."
+   },
+   "behindTheScenes": [
+    [
+     "/code-review",
+     "pin fixed point",
+     "find spec and standards",
+     "2 parallel agents",
+     "aggregate"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "pr",
+    "retro"
+   ],
+   "sources": [
+    {
+     "label": "code-review SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/code-review/SKILL.md"
+    },
+    {
+     "label": "code-review docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/code-review.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "pr": {
+   "name": "pr",
+   "command": "/pr",
+   "trigger": "write clear PR descriptions",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When the agent **writes a pull request** → [[pr]]",
+    "When reviewers need to **see the change fast** → [[pr]]",
+    "When you want to know ==how risky the merge is== → [[pr]]"
+   ],
+   "whatItIs": "The **shape of a good PR body**: a small picture, before/after proof, and how risky the merge is.",
+   "howItWorks": [
+    "Summary: the smallest visual that shows the change",
+    "Evidence: before and after; **screenshots** are best, then test runs or output",
+    "Merge danger: can you **roll it back** (two-way door) or not (one-way), plus blast radius",
+    "The agent reaches for it by itself when writing a PR"
+   ],
+   "example": {
+    "situation": "You finished a cache change and need a PR.",
+    "youType": "open a PR",
+    "whatHappens": [
+     "It draws a call tree.",
+     "It adds before/after test runs.",
+     "It marks it a two-way door."
+    ],
+    "youGet": "A **clear PR description**."
+   },
+   "behindTheScenes": [
+    [
+     "write PR",
+     "/pr template",
+     "Summary",
+     "Evidence",
+     "Merge Danger"
+    ]
+   ],
+   "calls": [],
+   "next": [
+    "retro"
+   ],
+   "sources": [
+    {
+     "label": "pr SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/pr/SKILL.md"
+    },
+    {
+     "label": "pr docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/pr.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 3)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "Gary Chen: 1.3 update breakdown (YouTube, zh-TW)",
+     "url": "https://youtu.be/QqhyqMvdx5Q"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "wizard": {
+   "name": "wizard",
+   "command": "/wizard",
+   "trigger": "script your human-only steps",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you must **set up credentials or CI secrets** → [[wizard]]",
+    "When a cutover needs **a human clicking** → [[wizard]]",
+    "When a third-party dashboard is ==unfamiliar== → [[wizard]]"
+   ],
+   "whatItIs": "It writes a **guided script** for steps only you can do, so you never re-explain them.",
+   "howItWorks": [
+    "It reads `.env`, workflows and config to find every needed value",
+    "It builds a bash wizard: opens URLs, says what to click, captures values",
+    "It writes `.env` and GitHub secrets safely and can re-run",
+    "Only for human steps; the agent does the rest itself"
+   ],
+   "example": {
+    "situation": "You must add 5 API keys to CI.",
+    "youType": "set up the deploy secrets",
+    "whatHappens": [
+     "It lists each secret the workflows use.",
+     "It writes `setup.sh`."
+    ],
+    "youGet": "An **interactive wizard script**."
+   },
+   "behindTheScenes": [
+    [
+     "human-only step",
+     "/wizard",
+     "scan config",
+     "generate bash wizard",
+     "you run it"
+    ]
+   ],
+   "calls": [],
+   "next": [],
+   "sources": [
+    {
+     "label": "wizard SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/wizard/SKILL.md"
+    },
+    {
+     "label": "wizard docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/wizard.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Standalone)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "the agent can reach for it"
+  },
+  "retro": {
+   "name": "retro",
+   "command": "/retro",
+   "trigger": "review session, improve setup",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When a build **went sideways** → [[retro]]",
+    "When the fix is done and you ask ==what would have prevented this?== → [[retro]]",
+    "When you want to **improve the agent's setup** → [[retro]]",
+    "When AGENTS.md is **bloated** with rules that change nothing → [[retro]]"
+   ],
+   "whatItIs": "It looks back at a session and suggests changes to the **environment**, not the code.",
+   "howItWorks": [
+    "It reads the session log (the current one by default)",
+    "It checks 7 areas: navigation, automated checks, coding standards, AGENTS.md size, tool economy, no-op instructions, info access",
+    "Mechanical mistakes → a **lint rule, pre-commit hook or CI job**; judgement calls → CODING_STANDARDS.md",
+    "It ==presents== the fixes to you, most serious first; you pick which to apply"
+   ],
+   "example": {
+    "situation": "The agent wasted 20 minutes finding the config file.",
+    "youType": "/retro",
+    "whatHappens": [
+     "It spots a missing navigation pointer.",
+     "It proposes a one-line pointer."
+    ],
+    "youGet": "A **ranked list** of setup improvements."
+   },
+   "behindTheScenes": [
+    [
+     "/retro",
+     "read session",
+     "scan 7 categories",
+     "ranked suggestions"
+    ]
+   ],
+   "calls": [
+    "writing-for-agents"
+   ],
+   "next": [
+    "improve-codebase-architecture"
+   ],
+   "sources": [
+    {
+     "label": "retro SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/retro/SKILL.md"
+    },
+    {
+     "label": "retro docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/retro.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (main flow step 4)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "Gary Chen: 1.3 update breakdown (YouTube, zh-TW)",
+     "url": "https://youtu.be/QqhyqMvdx5Q"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  },
+  "improve-codebase-architecture": {
+   "name": "improve-codebase-architecture",
+   "command": "/improve-codebase-architecture",
+   "trigger": "find modules to deepen",
+   "platforms": [
+    "claude-code",
+    "cursor",
+    "codex"
+   ],
+   "when": [
+    "When you have a **spare moment** for upkeep → [[improve-codebase-architecture]]",
+    "When a bug showed there is **no good seam** → [[improve-codebase-architecture]]",
+    "When the code feels ==hard for agents to navigate== → [[improve-codebase-architecture]]"
+   ],
+   "whatItIs": "A **checkup** that finds places to make modules deeper and shows them as a visual report.",
+   "howItWorks": [
+    "It explores the code using your glossary and ADRs",
+    "It makes an **HTML report** of candidates",
+    "You pick one and it grills you on it",
+    "Use /codebase-design to design the pick"
+   ],
+   "example": {
+    "situation": "The codebase has grown messy.",
+    "youType": "/improve-codebase-architecture",
+    "whatHappens": [
+     "It reports 5 candidates.",
+     "You pick the order module.",
+     "It grills the design."
+    ],
+    "youGet": "An **HTML report** and an idea for /grill-with-docs."
+   },
+   "behindTheScenes": [
+    [
+     "/improve-codebase-architecture",
+     "explore",
+     "HTML report",
+     "you pick",
+     "grilling loop"
+    ],
+    [
+     "pick",
+     "/grill-with-docs"
+    ]
+   ],
+   "calls": [
+    "grilling",
+    "codebase-design"
+   ],
+   "next": [
+    "grill-with-docs"
+   ],
+   "sources": [
+    {
+     "label": "improve-codebase-architecture SKILL.md",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/improve-codebase-architecture/SKILL.md"
+    },
+    {
+     "label": "improve-codebase-architecture docs page",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/docs/engineering/improve-codebase-architecture.md"
+    },
+    {
+     "label": "ask-matt SKILL.md (Codebase health)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+     "label": "README (#4)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+    }
+   ],
+   "kind": "skill",
+   "availability": "both",
+   "invoked": "you type it"
+  }
+ },
+ "chains": [
+  {
+   "id": "main-flow",
+   "title": "Main flow: idea to ship",
+   "trigger": "idea you want built",
+   "steps": [
+    "grill-with-docs",
+    "(prototype via handoff)",
+    "to-spec",
+    "to-tickets",
+    "implement or implement-spec",
+    "tdd",
+    "code-review",
+    "pr",
+    "retro"
+   ],
+   "inferred": [
+    "pr after code-review: ask-matt says /pr shapes the body when work goes up as a PR"
+   ],
+   "note": "Single-session builds skip to-spec and to-tickets and go straight to /implement.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (The main flow L15-34)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "bug",
+   "title": "On-ramp: something is broken",
+   "trigger": "hard bug",
+   "steps": [
+    "diagnosing-bugs",
+    "retro",
+    "improve-codebase-architecture (if no seam)"
+   ],
+   "inferred": [],
+   "note": "",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (On-ramps L50)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "issues",
+   "title": "On-ramp: issues piling up",
+   "trigger": "raw reports",
+   "steps": [
+    "triage",
+    "implement"
+   ],
+   "inferred": [],
+   "note": "Do not triage tickets that to-tickets produced.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (On-ramps L46-48)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "foggy",
+   "title": "On-ramp: huge foggy effort",
+   "trigger": "too big for one session",
+   "steps": [
+    "wayfinder",
+    "to-spec",
+    "to-tickets",
+    "implement"
+   ],
+   "inferred": [],
+   "note": "Wayfinder hands off at to-spec, never straight to implement unless tiny.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (On-ramps L52-54)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  },
+  {
+   "id": "health",
+   "title": "Codebase health",
+   "trigger": "spare moment",
+   "steps": [
+    "improve-codebase-architecture",
+    "grill-with-docs",
+    "(main flow)"
+   ],
+   "inferred": [],
+   "note": "codebase-design is the bench to design the chosen candidate.",
+   "sources": [
+    {
+     "label": "ask-matt SKILL.md (Codebase health L60)",
+     "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/ask-matt/SKILL.md"
+    }
+   ]
+  }
+ ],
+ "playbooks": []
+}

@@ -1,0 +1,14 @@
+{
+  "providers": {
+    "runinfra": {
+      "baseUrl": "https://api.runinfra.ai",
+      "api": "openai-completions",
+      "apiKey": "RUNINFRA_GATEWAY_KEY",
+      "models": [
+        {"id": "nemotron-3-5-lightning-30b"},
+        {"id": "glm-5-3-flash"},
+        {"id": "qwen3-8-27b"}
+      ]
+    }
+  }
+}

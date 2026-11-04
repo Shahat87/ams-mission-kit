@@ -1,0 +1,34 @@
+# Egress allowlist proxy (spec 6, 14 A7). The host renders the allow_hosts placeholder (space separated, exact names, at least one)
+# and passes the result base64 in env MCL_SQUID_CONF_B64 (decoded to /tmp/squid.conf). The same template serves the tool proxy and the deps proxy
+# (pypi.org files.pythonhosted.org registry.npmjs.org); only the host list differs.
+# Runs as uid 13 (proxy), --read-only, tmpfs /tmp. No cache, no pid file, logs to stdout/stderr.
+http_port 3128
+visible_hostname mc-lane-proxy
+pid_filename none
+cache deny all
+cache_mem 0 MB
+cache_store_log none
+coredump_dir /tmp
+access_log stdio:/dev/stdout
+cache_log /dev/stderr
+via off
+forwarded_for delete
+shutdown_lifetime 1 seconds
+
+acl CONNECT method CONNECT
+acl SSL_ports port 443
+# no leading dot = exact host match
+acl allow_hosts dstdomain {allow_hosts}
+# IP literals as the requested host (-n: do not reverse-resolve)
+acl ip_literal dstdom_regex -n ^[0-9.]+$ ^\[?[0-9a-fA-F]*:[0-9a-fA-F:.]*\]?$
+acl internal_names dstdomain host.docker.internal gateway.docker.internal localhost
+# checked on the RESOLVED address, so an allowed name that resolves to a private address is still refused
+acl private dst 0.0.0.0/8 10.0.0.0/8 100.64.0.0/10 127.0.0.0/8 169.254.0.0/16 172.16.0.0/12 192.168.0.0/16 ::1 fc00::/7 fe80::/10
+
+http_access deny !CONNECT
+http_access deny !SSL_ports
+http_access deny ip_literal
+http_access deny internal_names
+http_access deny private
+http_access allow allow_hosts
+http_access deny all

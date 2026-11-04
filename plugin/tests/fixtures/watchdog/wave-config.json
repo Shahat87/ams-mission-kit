@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "description": "watchdog fixture board",
+  "project": { "owner": "octo-labs", "title": "Watchdog Board", "number": 7 },
+  "worker_backend": "workflow",
+  "repo": { "path": ".", "remote": "https://github.com/octo-labs/app" },
+  "base_branch": "staging",
+  "columns": ["Backlog", "Ready", "Building", "QA", "Review", "Blocked", "Done"],
+  "labels": ["qa", "bug", "feature"],
+  "paths": {
+    "project_md": null,
+    "pre_flight_md": "docs/super-board/pre-flight.md",
+    "runs_dir": "docs/super-board/runs"
+  },
+  "merge_policy": { "default": "auto", "trusted_approvers": ["octo-operator"] },
+  "rebuild_cap": 2,
+  "verify_commands": ["npm test"],
+  "notifications": {
+    "channel": "session",
+    "chat_id": null,
+    "bot_identity": "super-board-bot[bot]"
+  },
+  "watchdog": {
+    "enabled": true,
+    "poll_minutes": 10,
+    "card_stall_minutes": 90,
+    "run_stall_minutes": 45,
+    "gh_points_floor": 500,
+    "max_pages": 5,
+    "trusted_authors": [],
+    "notify": "toast"
+  }
+}

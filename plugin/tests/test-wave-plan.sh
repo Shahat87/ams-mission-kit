@@ -1,0 +1,207 @@
+#!/usr/bin/env bash
+# Tests super-board-wave-plan.sh against fixtures. No gh calls, no network —
+# the dependency graph is injected with --deps.
+#
+# The contract these tests pin down changed on 2026-08-20. A wave used to be
+# "one card per column, then fill to max_workers". It is now "every Ready card
+# the dependency graph says is free, plus everything already in flight", with
+# max_workers demoted to an optional throttle. Several scenarios below exist
+# because the old contract shipped a board where five cards sat in Blocked long
+# after their blockers had closed.
+set -euo pipefail
+cd "$(dirname "$0")"
+PLAN="../scripts/super-board-wave-plan.sh"
+CFG=fixtures/wave-config.json
+ITEMS=fixtures/wave-items.json
+DEPS=fixtures/wave-deps.json
+
+fail() { echo "FAIL: $1" >&2; exit 1; }
+plan() { "$PLAN" --config "$1" --items "$ITEMS" --deps "$DEPS"; }
+
+# Uncapped is the default shape, so every scenario runs without a cap unless it
+# is specifically testing the throttle.
+NOCAP=$(jq 'del(.max_workers)' "$CFG")
+OUT=$(plan <(echo "$NOCAP"))
+
+# 1 — width follows the graph, not a knob. Free Ready cards are #12 alone:
+#     #11 is assigned, #14 waits on open #12, #15 is unreadable, the draft is not
+#     an issue. In flight: Review #10 and QA #13. Total 3.
+echo "$OUT" | jq -e '.cards | length == 3' >/dev/null || fail "expected 3 cards, got: $OUT"
+echo "$OUT" | jq -e '[.cards[].number] | sort == [10,12,13]' >/dev/null || fail "wrong cards: $OUT"
+
+# 2 — downstream-first: in-flight cards lead, so work already begun finishes
+#     before new work starts.
+echo "$OUT" | jq -e '[.cards[].status] | index("Ready") > index("Review")' >/dev/null \
+  || fail "in-flight cards must precede Ready cards: $OUT"
+
+# 3 — a Ready card with an OPEN blocker is not dispatched. This is the whole
+#     point: #14 would previously have been picked as backlog fill, hit its own
+#     preflight, and parked in Blocked.
+echo "$OUT" | jq -e '[.cards[].number] | index(14) == null' >/dev/null \
+  || fail "#14 waits on open #12 and must not be dispatched: $OUT"
+
+# 4 — an unreadable dependency line is fail-safe: never dispatched, always flagged.
+echo "$OUT" | jq -e '[.cards[].number] | index(15) == null' >/dev/null \
+  || fail "#15 has an unreadable Blocked-by line and must not be dispatched"
+echo "$OUT" | jq -e '[.flag[].number] == [15]' >/dev/null \
+  || fail "#15 must be flagged so a human can fix the line, got: $(echo "$OUT" | jq -c .flag)"
+echo "$OUT" | jq -e '.flag[0].why | test("None")' >/dev/null \
+  || fail "the flag must carry the reason, not just the number"
+
+# 5 — the sweep: a Blocked card whose blockers have all closed comes back.
+#     #16 waits on #9, which is closed. #17 waits on #12, which is open.
+echo "$OUT" | jq -e '[.sweep[].number] == [16]' >/dev/null \
+  || fail "expected only #16 swept, got: $(echo "$OUT" | jq -c .sweep)"
+echo "$OUT" | jq -e '.sweep[0].clearedBy == [9]' >/dev/null \
+  || fail "the sweep must name what cleared the card, for the comment it will post"
+
+# 6 — a swept card is NOT also dispatched in the same plan. The orchestrator moves
+#     it to Ready first; dispatching it straight from Blocked would skip that move
+#     and leave the board lying about where the card is.
+echo "$OUT" | jq -e '[.cards[].number] | index(16) == null' >/dev/null \
+  || fail "#16 must be swept, not dispatched from Blocked"
+
+# 7 — max_workers still throttles when set. It is a safety valve now, not the
+#     wave-sizing mechanism.
+OUT7=$(plan <(jq '.max_workers = 1' "$CFG"))
+echo "$OUT7" | jq -e '(.cards | length) == 1 and .cards[0].number == 10' >/dev/null \
+  || fail "max_workers=1 should keep only the leading in-flight card, got: $OUT7"
+
+# 8 — the throttle does not suppress the sweep. A capped wave still frees cards,
+#     because sweeping is a board correction and costs no worker.
+echo "$OUT7" | jq -e '[.sweep[].number] == [16]' >/dev/null \
+  || fail "a capped wave must still sweep, got: $(echo "$OUT7" | jq -c .sweep)"
+
+# 9 — assignee is the cross-machine mutex and still wins over everything.
+echo "$OUT" | jq -e '[.cards[].number] | index(11) == null' >/dev/null \
+  || fail "#11 is assigned and must never be dispatched"
+
+# 10 — reviews are no longer gated behind human_approves_merge. The merge race is
+#      guarded where it happens (the merge lock plus the freshness gate inside the
+#      wave workflow), so a second Review card is free to run here.
+OUT10=$("$PLAN" --config <(echo "$NOCAP") --items fixtures/wave-items-review-heavy.json --deps "$DEPS")
+echo "$OUT10" | jq -e '[.cards[] | select(.status == "Review")] | length >= 2' >/dev/null \
+  || fail "reviews should run in parallel now, got: $OUT10"
+
+# 11 — variant was removed in v3.0.0. A config still saying "qa-only" is refused
+#      (exit 65) until onboard upgrades it: reading it as a build board would start
+#      building on a board meant only for testing.
+RC=0; "$PLAN" --config <(echo "$NOCAP" | jq '.variant = "qa-only"') --items "$ITEMS" --deps "$DEPS" >/dev/null 2>&1 || RC=$?
+[ "$RC" -eq 65 ] || fail "a legacy qa-only config should exit 65, got $RC"
+
+# 12 — an invalid variant fails loudly (exit 65); an absent one is the normal case.
+RC=0; "$PLAN" --config <(jq '.variant = "fulll"' "$CFG") --items "$ITEMS" --deps "$DEPS" >/dev/null 2>&1 || RC=$?
+[ "$RC" -eq 65 ] || fail "invalid variant should exit 65, got $RC"
+"$PLAN" --config <(echo "$NOCAP" | jq 'del(.variant)') --items "$ITEMS" --deps "$DEPS" >/dev/null \
+  || fail "a config with no variant must plan normally"
+
+# 13 — empty board → empty everything (run-workflow.md's done condition depends
+#      on this shape).
+OUT13=$("$PLAN" --config <(echo "$NOCAP") --items <(echo '{"items":[]}') --deps "$DEPS")
+echo "$OUT13" | jq -e '.cards == [] and .sweep == [] and .flag == [] and .stranded == []' >/dev/null \
+  || fail "empty board should yield empty cards/sweep/flag/stranded, got: $OUT13"
+
+# 14 — a card the graph has never heard of is not treated as free. An issue beyond
+#      the fetch limit, or closed out from under the board, must not be dispatched
+#      on the strength of a missing entry.
+OUT14=$("$PLAN" --config <(echo "$NOCAP") --items "$ITEMS" --deps <(echo '{}'))
+echo "$OUT14" | jq -e '[.cards[] | select(.status == "Ready")] | length == 0' >/dev/null \
+  || fail "an empty graph must yield no Ready picks, got: $OUT14"
+
+# 15 — a graph that cannot be derived is a hard failure, not an empty graph.
+#      Without --deps and without config.repo.remote there is nothing to derive from.
+RC=0; "$PLAN" --config <(jq 'del(.repo)' "$CFG") --items "$ITEMS" >/dev/null 2>&1 || RC=$?
+[ "$RC" -eq 66 ] || fail "a missing repo remote should exit 66, got $RC"
+
+# 16 — a Building card with no claim is stranded: a stopped wave left it there and
+#      no lane selects from Building. A claimed one (#19) has a live worker.
+echo "$OUT" | jq -e '[.stranded[].number] == [18]' >/dev/null \
+  || fail "expected only #18 stranded, got: $(echo "$OUT" | jq -c .stranded)"
+echo "$OUT" | jq -e '[.cards[].number] | index(18) == null' >/dev/null \
+  || fail "#18 must be moved to Ready first, not dispatched from Building"
+
+# 17 — label routing. A Ready card labelled `qa` skips the Builder (lane qa); `bug`,
+#      `feature` and no label are built first (lane build). QA/Review cards keep their
+#      column's lane. Labels come from the item (`labels`) or the content, any case.
+LBL_ITEMS=$(jq -n '{items: [
+  {status:"Ready", labels:["QA"], content:{type:"Issue", number:12, title:"qa card", assignees:[]}},
+  {status:"Ready", labels:["bug"], content:{type:"Issue", number:10, title:"bug card", assignees:[]}},
+  {status:"Ready", content:{type:"Issue", number:13, title:"no label", assignees:[], labels:[{name:"feature"}]}},
+  {status:"Ready", content:{type:"Issue", number:9, title:"bare", assignees:[]}},
+  {status:"QA", labels:["qa"], content:{type:"Issue", number:11, title:"in qa", assignees:[]}}]}')
+LBL_DEPS=$(jq -n '[9,10,12,13] | map({(tostring): {runnable:true, parseable:true, blockers:[]}}) | add')
+OUT17=$("$PLAN" --config <(echo "$NOCAP") --items <(echo "$LBL_ITEMS") --deps <(echo "$LBL_DEPS"))
+lane() { echo "$OUT17" | jq -r --argjson n "$1" '.cards[] | select(.number == $n) | .lane'; }
+[ "$(lane 12)" = qa ]    || fail "a qa-labelled Ready card must skip Building (lane qa), got: $OUT17"
+[ "$(lane 10)" = build ] || fail "a bug card is built first, got $(lane 10)"
+[ "$(lane 13)" = build ] || fail "a feature card (label on content) is built first, got $(lane 13)"
+[ "$(lane 9)" = build ]  || fail "no label = Building, got $(lane 9)"
+[ "$(lane 11)" = qa ]    || fail "a QA-column card keeps lane qa, got $(lane 11)"
+echo "$OUT17" | jq -e '.cards[] | select(.number == 12) | .labels == ["qa"]' >/dev/null \
+  || fail "labels must be passed through lower-cased, got: $OUT17"
+
+# 18 — resume: a 🙋 Blocked card whose human step is done (#20) is reported for
+#      the move back to Review; one still waiting (#21) is not. Neither is swept
+#      to Ready or dispatched from Blocked.
+echo "$OUT" | jq -e '[.resume[].number] == [20]' >/dev/null \
+  || fail "expected only #20 resumed, got: $(echo "$OUT" | jq -c .resume)"
+echo "$OUT" | jq -e '[.sweep[].number, .cards[].number] | (index(20) == null and index(21) == null)' >/dev/null \
+  || fail "🙋 cards must not be swept to Ready or dispatched"
+
+# 19 — a moved head while Blocked goes to request refresh, never approved resume.
+OUT19=$("$PLAN" --config <(echo "$NOCAP") --items "$ITEMS" --deps <(jq '.["21"].approvalRefresh=true | .["21"].approvalWhy="PR head changed"' "$DEPS"))
+echo "$OUT19" | jq -e '[.refreshApproval[].number] == [21]' >/dev/null || fail "stale approval must get a fresh request"
+echo "$OUT19" | jq -e '[.resume[].number, .cards[].number, .sweep[].number] | index(21) == null' >/dev/null || fail "refresh is not permission to merge or build"
+
+# 20 — deps.sh must receive --config (it needs trusted_approvers). A regular file is
+#      passed through as is; a non-regular config (FIFO / process substitution, already
+#      consumed) gets a temp copy of what was read, and that copy is removed on exit.
+STUBDIR=$(mktemp -d)
+cp ../scripts/* "$STUBDIR"/ 2>/dev/null || true
+cat > "$STUBDIR/super-board-deps.sh" <<'STUB'
+#!/usr/bin/env bash
+while [ $# -gt 0 ]; do
+  case "$1" in --config) CFGARG="$2"; shift 2 ;; *) shift ;; esac
+done
+[ -n "${CFGARG:-}" ] || { echo "stub deps: no --config" >&2; exit 97; }
+[ -f "$CFGARG" ] || { echo "stub deps: --config is not a readable regular file: $CFGARG" >&2; exit 98; }
+printf '%s
+' "$CFGARG" > "$STUB_SEEN"
+cp "$CFGARG" "$STUB_SEEN.content"
+echo '{}'
+STUB
+chmod +x "$STUBDIR/super-board-deps.sh"
+export STUB_SEEN="$STUBDIR/seen"
+RCFG="$STUBDIR/cfg.json"; jq '.repo = {remote: "https://github.com/x/y.git"} | del(.max_workers)' "$CFG" > "$RCFG"
+RC=0; "$STUBDIR/super-board-wave-plan.sh" --config "$RCFG" --items "$ITEMS" >/dev/null 2>"$STUBDIR/err" || RC=$?
+[ "$RC" -eq 0 ] || fail "wave-plan with a stub deps.sh (regular file) failed $RC: $(cat "$STUBDIR/err")"
+[ "$(cat "$STUB_SEEN")" = "$RCFG" ] || fail "a regular-file config must be passed to deps.sh as is, got: $(cat "$STUB_SEEN")"
+rm -f "$STUB_SEEN" "$STUB_SEEN.content"
+RC=0; "$STUBDIR/super-board-wave-plan.sh" --config <(cat "$RCFG") --items "$ITEMS" >/dev/null 2>"$STUBDIR/err" || RC=$?
+[ "$RC" -eq 0 ] || fail "wave-plan with a stub deps.sh (FIFO config) failed $RC: $(cat "$STUBDIR/err")"
+SEEN_CFG=$(cat "$STUB_SEEN")
+case "$SEEN_CFG" in ''|/dev/fd/*|/proc/*) fail "a FIFO config must reach deps.sh as a temp file, got: $SEEN_CFG" ;; esac
+jq -e '.repo.remote' "$STUB_SEEN.content" >/dev/null || fail "the deps.sh config copy must hold the config that was read"
+[ ! -e "$SEEN_CFG" ] || fail "the temp config copy must be removed on exit: $SEEN_CFG"
+rm -rf "$STUBDIR"; unset STUB_SEEN
+
+# 21 — a dependency graph far beyond the OS argv limit (Windows ~32K per command line, Linux
+#      128K per argument) must still plan: it once rode on jq's command line (--argjson deps)
+#      and died with exit 126 "Argument list too long".
+BIGDEPS=$(jq '. + ([range(3000)] | map({((. + 5000) | tostring): {runnable: false, parseable: true, blockers: [], note: ("filler-" + ("x" * 60))}}) | add)' "$DEPS")
+[ "${#BIGDEPS}" -gt 200000 ] || fail "deps fixture must exceed 200 KB, got ${#BIGDEPS}"
+TMPERR21=$(mktemp); RC=0; OUT21=$("$PLAN" --config <(echo "$NOCAP") --items "$ITEMS" --deps <(echo "$BIGDEPS") 2>"$TMPERR21") || RC=$?
+[ "$RC" -eq 0 ] || fail "a >200 KB dependency graph must not break the planner (exit $RC): $(head -c 300 "$TMPERR21")"
+[ "$(echo "$OUT21" | jq -S -c .)" = "$(echo "$OUT" | jq -S -c .)" ] || fail "a large graph must plan exactly as the small one: $OUT21"
+
+# 22 — a deps file holding no value or several values is a broken graph, not "all cards unknown":
+#      --slurpfile of an empty file binds [] and $deps_f[0] silently became null.
+for BADDEPS in "" '{}
+{}'; do
+  RC=0; "$PLAN" --config <(echo "$NOCAP") --items "$ITEMS" --deps <(printf '%s' "$BADDEPS") >/dev/null 2>"$TMPERR21" || RC=$?
+  [ "$RC" -ne 0 ] || fail "an empty or multi-value deps file must fail, not plan"
+  grep -q "deps: expected exactly one JSON value" "$TMPERR21" || fail "bad deps file must say why: $(head -c 300 "$TMPERR21")"
+done
+rm -f "$TMPERR21"
+
+echo "PASS: test-wave-plan.sh (22 scenarios)"

@@ -1,0 +1,34 @@
+{
+  "_comment": "Per-tool run templates for entry.py. {model} = MCL_MODEL (validated), {brief_file} = copy of /out/brief on tmpfs, {work} = /work, {home} = $HOME. Flags marked UNVERIFIED come from newer CLI versions than the pins (plan1b-facts section 1) and must be confirmed with --help in the built image.",
+  "tools": {
+    "codex": {
+      "argv": ["codex", "exec", "--json", "-s", "danger-full-access", "-m", "{model}", "-"],
+      "stdin_brief": true,
+      "auth_env": ["OPENAI_API_KEY"],
+      "auth_file": {"cred_dir": "codex", "name": "auth.json", "dest": ".codex/auth.json"},
+      "profile": {"src": "codex", "dest": ".codex"},
+      "env": {"CODEX_HOME": "{home}/.codex"},
+      "session_globs": [".codex/sessions/**/*.jsonl"],
+      "unverified": "danger-full-access chosen because Codex's own Linux sandbox may not start under cap-drop ALL; the container is the sandbox. Smoke S1 must confirm. Auth link survives token refresh only if codex rewrites auth.json in place (S9)."
+    },
+    "grok": {
+      "argv": ["grok", "--no-auto-update", "--no-alt-screen", "--output-format", "streaming-json", "--cwd", "{work}", "--always-approve", "--sandbox", "off", "--model", "{model}", "--prompt-file", "{brief_file}"],
+      "stdin_brief": false,
+      "auth_env": ["XAI_API_KEY"],
+      "auth_file": {"cred_dir": "grok", "name": "auth.json", "dest": ".grok/auth.json"},
+      "profile": {"src": "grok", "dest": ".grok"},
+      "env": {"GROK_HOME": "{home}/.grok"},
+      "session_globs": [".grok/sessions/**/*.jsonl"],
+      "unverified": "All flags were checked on grok 1.0.52 only, not on the pinned 1.0.50: --no-auto-update, --no-alt-screen, --output-format streaming-json, --cwd, --always-approve, --sandbox off, --prompt-file. Run grok --help in the image. Session layout and whether model traffic honours HTTPS_PROXY are also UNVERIFIED."
+    },
+    "pi": {
+      "argv": ["pi", "--mode", "json", "--provider", "runinfra", "--model", "{model}", "--no-approve"],
+      "stdin_brief": true,
+      "auth_env": ["RUNINFRA_GATEWAY_KEY"],
+      "profile": {"src": "pi", "dest": ".pi/agent"},
+      "env": {"PI_CODING_AGENT_DIR": "{home}/.pi/agent", "NODE_USE_ENV_PROXY": "1"},
+      "session_globs": [".pi/agent/sessions/**/*.jsonl"],
+      "unverified": "Flags checked on pi 1.3.0 docs only, not on the pinned 1.0.4. Model id form is runinfra/<id> as in the pi-delegate relay."
+    }
+  }
+}

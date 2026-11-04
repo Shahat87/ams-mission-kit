@@ -1,0 +1,134 @@
+{
+  "data": {
+    "viewer": { "login": "octo-operator" },
+    "rateLimit": { "remaining": 4800 },
+    "repositoryOwner": {
+      "projectV2": {
+        "items": {
+          "pageInfo": { "hasNextPage": false, "endCursor": null },
+          "nodes": [
+            {
+              "updatedAt": "2026-01-01T00:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  { "name": "Ready", "field": { "name": "Status" } }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 2,
+                "title": "The blocker card",
+                "state": "OPEN",
+                "body": "### ⛔ Preflight\n\nStuff.\n\n## Blocked by\n\n- None.\n",
+                "labels": { "nodes": [ { "name": "feature" } ] },
+                "assignees": { "nodes": [] },
+                "comments": { "nodes": [] },
+                "timelineItems": { "nodes": [] }
+              }
+            },
+            {
+              "updatedAt": "2026-01-01T00:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  { "name": "Blocked", "field": { "name": "Status" } }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 7,
+                "title": "Add billing export",
+                "state": "OPEN",
+                "body": "### ⛔ Preflight\n\nStuff.\n\n## Blocked by\n\n- None.\n",
+                "labels": { "nodes": [ { "name": "feature" } ] },
+                "assignees": { "nodes": [ { "login": "super-board-bot[bot]" } ] },
+                "comments": {
+                  "nodes": [
+                    {
+                      "author": { "login": "super-board-bot[bot]" },
+                      "createdAt": "2026-01-01T00:00:00Z",
+                      "body": "Parked: this needs a credential only you can add.\n\nblocked-by: -"
+                    }
+                  ]
+                },
+                "timelineItems": { "nodes": [] }
+              }
+            },
+            {
+              "updatedAt": "2026-01-01T00:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  { "name": "Review", "field": { "name": "Status" } }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 12,
+                "title": "Fix the price feed",
+                "state": "OPEN",
+                "body": "### ⛔ Preflight\n\nStuff.\n\n## Blocked by\n\n- None.\n",
+                "labels": { "nodes": [ { "name": "bug" } ] },
+                "assignees": { "nodes": [ { "login": "super-board-bot[bot]" } ] },
+                "comments": {
+                  "nodes": [
+                    {
+                      "author": { "login": "super-board-bot[bot]" },
+                      "createdAt": "2026-01-01T00:00:00Z",
+                      "body": "Build handoff for #12; QA passed, waiting on review."
+                    }
+                  ]
+                },
+                "timelineItems": {
+                  "nodes": [
+                    {
+                      "subject": {
+                        "commits": { "nodes": [ { "committedDate": "2026-01-01T00:00:00Z" } ] }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "updatedAt": "2026-01-01T00:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  { "name": "Blocked", "field": { "name": "Status" } }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 21,
+                "title": "Refactor the lexer",
+                "state": "OPEN",
+                "body": "### ⛔ Preflight\n\nStuff.\n\n## Blocked by\n\n- None — but #12 must be merged first.\n",
+                "labels": { "nodes": [] },
+                "assignees": { "nodes": [] },
+                "comments": { "nodes": [] },
+                "timelineItems": { "nodes": [] }
+              }
+            },
+            {
+              "updatedAt": "2026-01-01T00:00:00Z",
+              "fieldValues": {
+                "nodes": [
+                  { "name": "Done", "field": { "name": "Status" } }
+                ]
+              },
+              "content": {
+                "__typename": "Issue",
+                "number": 30,
+                "title": "Ship the onboarding fix",
+                "state": "CLOSED",
+                "body": "### ⛔ Preflight\n\nStuff.\n\n## Blocked by\n\n- None.\n",
+                "labels": { "nodes": [ { "name": "bug" } ] },
+                "assignees": { "nodes": [] },
+                "comments": { "nodes": [] },
+                "timelineItems": { "nodes": [] }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

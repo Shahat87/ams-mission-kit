@@ -1,0 +1,398 @@
+# Template for the sandbox runner repo (<owner>/mc-lane-runner) — .github/workflows/lane.yml (design spec kept in the maintainers' docs, not shipped).
+#
+# Rules this file keeps (tests/test_lane_remote.py checks the first two):
+#   - No GitHub expression sits inside a `run:` body. Inputs reach scripts only through `env:`.
+#     The two large inputs (brief_gz_b64, config_b64) are read from the event file instead: a Windows
+#     environment variable is capped at 32767 characters and the brief can be 60 KB.
+#   - Every `uses:` is pinned to a full commit SHA.
+#   - Only the dispatched tool's secret is mapped, in its own step, behind `if: inputs.tool == '...'`.
+#   - Tool output goes to a file under $MCL_DIR, never to the job log (A10): only fixed status lines print.
+#   - Secrets live only in the GitHub Environment mc-lane (deployment branches: the default branch), because
+#     a dispatch runs the dispatched ref's copy of this file, so only the Environment's branch policy keeps the secrets
+#     from branch copies; the job `if:` and the first step are further layers.
+#
+# CLI of scripts/super-board-lane-docker.py (copied into the runner repo; the contract is tested in
+# tests/test_lane_docker.py, class ContractTests). Every subcommand takes --nonce; all but cleanup take --config
+# (the decoded config_b64: the runner payload built by super-board-lane-remote.py), --tool, --model, --lane,
+# --timeout-min, --out-dir. $MCL_DIR/x is --out-dir and is the uploaded artifact; host-only state (run.json,
+# env-files) goes to $MCL_DIR/state, a sibling, so it is never uploaded.
+#   stage    + --seed DIR --brief FILE --start-sha SHA
+#            network, proxy, volumes; clones the seed into wt/pristine/repo; puts the brief in the out volume
+#   run      reads the tool's key from this process env; writes state/run.json {exit_code, timed_out};
+#            its own exit code is the module's status, NOT the tool's
+#   extract  + --card N --attempt N
+#            docker cp of /x/bundle.tar only; writes x/bundle.tar and x/facts.json (host-built, A1)
+#   verify   host-judged (A13, A14): idle verify container + docker exec per command; writes x/verify.json
+#            {status, commands: [{cmd, exit, tail, phase, inherited?}], notes?, base?}
+#   gate-verify  --nonce N --config F --out-dir D --seed DIR --start-sha SHA --merge-sha SHA (lane=gate; no tool, no proxy)
+#            stages start_sha into /repo, merges merge_sha (the base) into it, runs verify_setup / verify_commands with no
+#            patch (host-driven docker exec, A13); writes x/verify.json. A merge conflict is status merge_conflict.
+#   exec-sandbox  --nonce N --config F --out-dir D --seed DIR --start-sha SHA --command-file F (lane=exec; no tool, no proxy)
+#            stages start_sha, runs the argv list in the file in a fresh verify container with no shell; writes
+#            x/exec.log and x/exec.json {"rc": N}
+#   cleanup  --nonce N only: removes every mcl-<nonce>-* container, volume and network
+#
+# Replace the repo allowlist in the validation step with the product repos this board may dispatch.
+name: mc-lane
+run-name: lane ${{ inputs.nonce }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: owner/name of the product repo
+        required: true
+        type: string
+      start_sha:
+        required: true
+        type: string
+      base_sha:
+        description: lane=gate only, 40 hex - the base commit merged into start_sha before the gate verifies; empty for every other lane
+        required: false
+        default: ''
+        type: string
+      card:
+        required: true
+        type: string
+      lane:
+        required: true
+        type: string
+      attempt:
+        required: true
+        type: string
+      tool:
+        required: true
+        type: string
+      model:
+        required: true
+        type: string
+      nonce:
+        required: true
+        type: string
+      timeout_min:
+        required: true
+        type: string
+      brief_gz_b64:
+        required: true
+        type: string
+      config_b64:
+        required: true
+        type: string
+      command_json:
+        description: lane=exec only - the command as a JSON argv list (printable ASCII, at most 4096 bytes); empty for every other lane
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  lane:
+    environment: mc-lane
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: [self-hosted, mc-lane]
+    timeout-minutes: 150
+    env:
+      MC_PY: python3
+    steps:
+      - name: Refuse to run off the default branch
+        # Spec section 15.7: a dispatch from any other branch could run a changed copy of this file.
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$DEFAULT_BRANCH" ] || [ "$GITHUB_REF" != "refs/heads/$DEFAULT_BRANCH" ]; then
+            echo "lane.yml runs only from the default branch"
+            exit 1
+          fi
+          echo "ref ok"
+
+      - name: Check out the runner repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Validate inputs
+        env:
+          INPUT_REPO: ${{ inputs.repo }}
+          INPUT_START_SHA: ${{ inputs.start_sha }}
+          INPUT_BASE_SHA: ${{ inputs.base_sha }}
+          INPUT_CARD: ${{ inputs.card }}
+          INPUT_LANE: ${{ inputs.lane }}
+          INPUT_ATTEMPT: ${{ inputs.attempt }}
+          INPUT_TOOL: ${{ inputs.tool }}
+          INPUT_MODEL: ${{ inputs.model }}
+          INPUT_NONCE: ${{ inputs.nonce }}
+          INPUT_TIMEOUT_MIN: ${{ inputs.timeout_min }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$MC_PY" - <<'PY'
+          import base64, gzip, io, json, os, re, sys
+          from pathlib import Path
+
+          REPOS = {"Shahat87/ams-mission-kit"}
+          TOOLS = {"codex", "grok", "pi", "fake"}
+          LANES = {"build", "qa", "review", "gate", "exec", "delegate"}
+          E = os.environ
+
+          def fail(why):
+              print("input validation failed: " + why)
+              sys.exit(1)
+
+          def need(name, pattern):
+              value = E.get("INPUT_" + name, "")
+              if not re.fullmatch(pattern, value):
+                  fail(name.lower())
+              return value
+
+          nonce = need("NONCE", r"[a-f0-9]{32}")
+          start = need("START_SHA", r"[0-9a-f]{40}")
+          repo = need("REPO", r"[A-Za-z0-9_.-]{1,100}/[A-Za-z0-9_.-]{1,100}")
+          if repo not in REPOS:
+              fail("repo")
+          tool = need("TOOL", r"[a-z]{2,8}")
+          if tool not in TOOLS:
+              fail("tool")
+          lane = need("LANE", r"[a-z]{2,8}")
+          if lane not in LANES:
+              fail("lane")
+          base = need("BASE_SHA", r"[0-9a-f]{40}" if lane == "gate" else r"")      # required for the gate, empty otherwise
+          model = need("MODEL", r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,79}")
+          card = need("CARD", r"[0-9]{1,8}")
+          attempt = need("ATTEMPT", r"[0-9]{1,2}")
+          timeout = need("TIMEOUT_MIN", r"[0-9]{1,3}")
+          if not 5 <= int(timeout) <= 120:
+              fail("timeout_min")
+
+          event = json.loads(Path(E["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
+          inputs = event.get("inputs") or {}
+          brief_b64 = inputs.get("brief_gz_b64", "")
+          config_b64 = inputs.get("config_b64", "")
+          for name, value in (("brief_gz_b64", brief_b64), ("config_b64", config_b64)):
+              if not re.fullmatch(r"[A-Za-z0-9+/]+={0,2}", value):
+                  fail(name)
+          if sum(len(k) + len(str(v)) for k, v in inputs.items()) > 60000:
+              fail("inputs are too large")
+
+          # lane=exec: the command is an argv list, re-checked here (the Surface is not trusted) with the rules of
+          # lane-remote validate_exec_command; any other lane carries none. It reaches the runner through the event file.
+          command_json = str(inputs.get("command_json", ""))
+          if lane == "exec":
+              try:
+                  argv = json.loads(command_json)
+              except ValueError:
+                  fail("command_json")
+              if not isinstance(argv, list) or not argv:
+                  fail("command_json")
+              for item in argv:
+                  if not isinstance(item, str) or not item or not all(0x20 <= ord(ch) <= 0x7e for ch in item):
+                      fail("command_json")
+                  if "$(" in item or chr(96) in item:
+                      fail("command_json")
+              command_json = json.dumps(argv, separators=(",", ":"))
+              if len(command_json.encode("utf-8")) > 4096:
+                  fail("command_json")
+          elif command_json:
+              fail("command_json")
+
+          brief = gzip.GzipFile(fileobj=io.BytesIO(base64.b64decode(brief_b64))).read(2_000_001)
+          if len(brief) > 2_000_000:
+              fail("brief too large")
+          config = base64.b64decode(config_b64)
+          json.loads(config)
+
+          work = Path(E["RUNNER_TEMP"]) / ("mcl-" + nonce)
+          (work / "in").mkdir(parents=True)
+          (work / "x").mkdir()
+          (work / "in" / "brief.txt").write_bytes(brief)
+          (work / "in" / "config.json").write_bytes(config)
+          if lane == "exec":
+              (work / "in" / "command.json").write_text(command_json, encoding="utf-8")
+
+          with open(E["GITHUB_ENV"], "a", encoding="utf-8") as env:
+              for key, value in (("MCL_NONCE", nonce), ("MCL_START", start), ("MCL_BASE", base), ("MCL_REPO", repo),
+                                 ("MCL_TOOL", tool), ("MCL_LANE", lane), ("MCL_MODEL", model),
+                                 ("MCL_CARD", card), ("MCL_ATTEMPT", attempt), ("MCL_TIMEOUT", timeout),
+                                 ("MCL_DIR", str(work))):
+                  env.write(key + "=" + value + "\n")
+          print("inputs ok")
+          PY
+
+      - name: Fetch the start commit into a bare seed
+        env:
+          LANE_REPO_TOKEN: ${{ secrets.LANE_REPO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          seed="$MCL_DIR/seed"
+          git init --bare "$seed" > /dev/null
+          auth="$(printf 'x-access-token:%s' "$LANE_REPO_TOKEN" | base64 | tr -d '\n')"
+          export GIT_TERMINAL_PROMPT=0
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0="http.https://github.com/.extraheader"
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth"
+          if [ -z "$MCL_BASE" ]; then
+            fetch_args=(--depth 1 "$MCL_START")
+          else
+            # lane=gate: both commits, with history (a shallow pair has no merge base)
+            fetch_args=("$MCL_START" "$MCL_BASE")
+          fi
+          if ! git -C "$seed" fetch --no-tags "https://github.com/$MCL_REPO.git" "${fetch_args[@]}" > "$MCL_DIR/fetch.log" 2>&1; then
+            echo "seed fetch failed"
+            exit 1
+          fi
+          unset GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0 auth
+          if [ -z "$MCL_BASE" ]; then
+            if [ "$(git -C "$seed" rev-parse FETCH_HEAD)" != "$MCL_START" ]; then
+              echo "seed commit mismatch"
+              exit 1
+            fi
+          else
+            for sha in "$MCL_START" "$MCL_BASE"; do
+              if [ "$(git -C "$seed" rev-parse --verify "$sha^{commit}")" != "$sha" ]; then
+                echo "seed commit mismatch"
+                exit 1
+              fi
+            done
+            git -C "$seed" update-ref refs/mc/base "$MCL_BASE"
+          fi
+          git -C "$seed" update-ref refs/mc/start "$MCL_START"
+          if git -C "$seed" config --list | grep -qiE 'token|extraheader|authorization'; then
+            echo "seed config holds a credential"
+            exit 1
+          fi
+          rm -f "$MCL_DIR/fetch.log"
+          echo "seed ok"
+
+      - name: Stage
+        if: inputs.lane != 'gate' && inputs.lane != 'exec'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! "$MC_PY" scripts/super-board-lane-docker.py stage --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+              --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+              --out-dir "$MCL_DIR/x" --seed "$MCL_DIR/seed" --brief "$MCL_DIR/in/brief.txt" --start-sha "$MCL_START" >> "$MCL_DIR/step.log" 2>&1; then
+            echo "stage failed"
+            exit 1
+          fi
+          echo "stage ok"
+
+      - name: Run (codex)
+        if: inputs.tool == 'codex' && inputs.lane != 'gate' && inputs.lane != 'exec'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        shell: bash
+        run: |
+          rc=0
+          "$MC_PY" scripts/super-board-lane-docker.py run --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+            --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+            --out-dir "$MCL_DIR/x" >> "$MCL_DIR/step.log" 2>&1 || rc=$?
+          echo "run finished, module status $rc"
+
+      - name: Run (grok)
+        if: inputs.tool == 'grok' && inputs.lane != 'gate' && inputs.lane != 'exec'
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+        shell: bash
+        run: |
+          rc=0
+          "$MC_PY" scripts/super-board-lane-docker.py run --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+            --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+            --out-dir "$MCL_DIR/x" >> "$MCL_DIR/step.log" 2>&1 || rc=$?
+          echo "run finished, module status $rc"
+
+      - name: Run (pi)
+        if: inputs.tool == 'pi' && inputs.lane != 'gate' && inputs.lane != 'exec'
+        env:
+          RUNINFRA_GATEWAY_KEY: ${{ secrets.RUNINFRA_GATEWAY_KEY }}
+        shell: bash
+        run: |
+          rc=0
+          "$MC_PY" scripts/super-board-lane-docker.py run --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+            --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+            --out-dir "$MCL_DIR/x" >> "$MCL_DIR/step.log" 2>&1 || rc=$?
+          echo "run finished, module status $rc"
+
+      - name: Run (fake)
+        if: inputs.tool == 'fake' && inputs.lane != 'gate' && inputs.lane != 'exec'
+        shell: bash
+        run: |
+          rc=0
+          "$MC_PY" scripts/super-board-lane-docker.py run --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+            --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+            --out-dir "$MCL_DIR/x" >> "$MCL_DIR/step.log" 2>&1 || rc=$?
+          echo "run finished, module status $rc"
+
+      # lane=gate (spec section 10): the merge gate asks for a verify of the merged tree (start_sha with base_sha merged in)
+      # and nothing else. No tool runs and no secret is mapped (the Run steps above skip), there is no patch, and x/ ends up
+      # holding only verify.json. gate-verify is the same function lane-delegate calls for where=local: it stages the
+      # merge itself (this is why the Stage step skips the gate), and the verdict is host-judged (A13): every command is
+      # its own docker exec on this runner. The gate compares a failure with the base itself, by dispatching again for the
+      # base sha, so no judge pass runs here.
+      - name: Gate verify
+        if: inputs.lane == 'gate'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! "$MC_PY" scripts/super-board-lane-docker.py gate-verify --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json"               --out-dir "$MCL_DIR/x" --seed "$MCL_DIR/seed" --start-sha "$MCL_START" --merge-sha "$MCL_BASE" >> "$MCL_DIR/step.log" 2>&1; then
+            echo "gate verify failed"
+            exit 1
+          fi
+          echo "gate verify ok"
+
+      # lane=exec (spec F2): a test command for tool code, run only here. No tool runs and no secret is mapped (the Run steps
+      # and the Stage step skip). exec-sandbox stages start_sha from the seed, runs the validated argv list in a fresh verify
+      # container with no shell, and writes x/exec.log and x/exec.json {"rc": N}. The step succeeds whenever the command ran,
+      # whatever its exit code; it fails only when staging or the arguments failed.
+      - name: Exec
+        if: inputs.lane == 'exec'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! "$MC_PY" scripts/super-board-lane-docker.py exec-sandbox --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+              --seed "$MCL_DIR/seed" --start-sha "$MCL_START" --command-file "$MCL_DIR/in/command.json" \
+              --out-dir "$MCL_DIR/x" >> "$MCL_DIR/step.log" 2>&1; then
+            echo "exec failed"
+            exit 1
+          fi
+          echo "exec ok"
+
+      - name: Extract and verify
+        if: inputs.lane != 'gate' && inputs.lane != 'exec'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! "$MC_PY" scripts/super-board-lane-docker.py extract --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+              --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+              --out-dir "$MCL_DIR/x" --card "$MCL_CARD" --attempt "$MCL_ATTEMPT" >> "$MCL_DIR/step.log" 2>&1; then
+            echo "extract failed"
+            exit 1
+          fi
+          echo "extract ok"
+          if ! "$MC_PY" scripts/super-board-lane-docker.py verify --nonce "$MCL_NONCE" --config "$MCL_DIR/in/config.json" \
+              --tool "$MCL_TOOL" --model "$MCL_MODEL" --lane "$MCL_LANE" --timeout-min "$MCL_TIMEOUT" \
+              --out-dir "$MCL_DIR/x" >> "$MCL_DIR/step.log" 2>&1; then
+            echo "verify failed"
+            exit 1
+          fi
+          echo "verify ok"
+
+      - name: Upload result
+        if: always() && env.MCL_NONCE != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: mc-lane-${{ env.MCL_NONCE }}
+          path: ${{ env.MCL_DIR }}/x
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Clean up
+        if: always() && env.MCL_NONCE != ''
+        shell: bash
+        run: |
+          "$MC_PY" scripts/super-board-lane-docker.py cleanup --nonce "$MCL_NONCE" > /dev/null 2>&1 || echo "cleanup reported a problem"
+          rm -rf "$MCL_DIR"
+          echo "cleanup done"

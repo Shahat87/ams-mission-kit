@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "project": {
+    "owner": "acme",
+    "number": 1
+  },
+  "repo": {
+    "path": ".",
+    "remote": "git@github.com:acme/widgets.git"
+  },
+  "max_workers": 3
+}

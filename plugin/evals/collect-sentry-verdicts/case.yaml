@@ -1,0 +1,16 @@
+schema_version: "1.1"
+name: collect-sentry-verdicts
+description: >
+  Sentry collect with --yes. WEB-4411 (checkout crash, seen 2 hours ago, bug still in the code)
+  must be verified and filed as a bug in the ticket format; WEB-4490 (avatar crash, last seen
+  11 days ago, fixed by merged PR #377 ten days ago) must be dropped as drop-fixed with that
+  evidence. Everything is offline: stubbed gh and fixture-backed Sentry.
+tags: [super-collect, collect-sentry]
+runs: 3
+expected_outcome: 4411 filed into Backlog in Problem/Context/Evidence/Fix/Acceptance Criteria/Risk format; 4490 dropped as drop-fixed citing PR #377.
+execution:
+  max_turns: 60
+  timeout_seconds: 1200
+  allowed_tools: [Read, Glob, Grep, Skill, Bash, Write, Agent]
+context:
+  scaffold_script: seed.sh

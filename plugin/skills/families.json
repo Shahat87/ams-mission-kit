@@ -1,0 +1,21 @@
+{
+  "you_type": {
+    "title": "You type — 6 skills",
+    "skills": {
+      "super-board": "Orchestrator: plans waves, runs Build → QA → Review, merges when green.",
+      "super-collect": "Finds problems (Sentry, PostHog, issues, PRs, architecture) and files verified Backlog cards.",
+      "ui-refine-loop": "Critique → refine loop that polishes one page or component.",
+      "visual": "One HTML page: branch recap, plan, or codebase map with diagrams.",
+      "git-sync": "Commit per logical change, merge-pull, push without force, report.",
+      "mission-control": "The operator's router: picks the skill per phase, hands builds to super-board."
+    }
+  },
+  "board_runs": {
+    "title": "The board runs — 3 lanes",
+    "skills": {
+      "super-build": "Builder lane: worktree, smallest safe change, tests, draft PR.",
+      "super-qa": "Tester lane: evidence, test-gap check, screenshots, or bounce to Build.",
+      "super-review": "Reviewer lane: own hypotheses, remembers prior findings, merge gate."
+    }
+  }
+}

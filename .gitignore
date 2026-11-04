@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# super-board runtime state
+.claude/super-board/
+
+# secrets
+.env
+.env.*
+
+# Node
+node_modules/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini

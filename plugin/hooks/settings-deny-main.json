@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(gh pr merge:*)",
+      "Bash(gh api */merge*)",
+      "Bash(gh api *mergePullRequest*)",
+      "Bash(gh api *enablePullRequestAutoMerge*)",
+      "Bash(gh pr create * --base main*)",
+      "Bash(gh pr create * --base=main*)",
+      "Bash(gh pr create * -B main*)",
+      "Bash(gh pr create * -B=main*)",
+      "Bash(gh pr create * -Bmain*)",
+      "Bash(gh pr edit * --base main*)",
+      "Bash(gh pr edit * --base=main*)",
+      "Bash(gh pr edit * -B main*)",
+      "Bash(gh pr edit * -B=main*)",
+      "Bash(gh pr edit * -Bmain*)",
+      "PowerShell(gh pr merge:*)",
+      "PowerShell(gh api */merge*)",
+      "PowerShell(gh api *mergePullRequest*)",
+      "PowerShell(gh api *enablePullRequestAutoMerge*)",
+      "PowerShell(gh pr create * --base main*)",
+      "PowerShell(gh pr create * --base=main*)",
+      "PowerShell(gh pr create * -B main*)",
+      "PowerShell(gh pr create * -B=main*)",
+      "PowerShell(gh pr create * -Bmain*)",
+      "PowerShell(gh pr edit * --base main*)",
+      "PowerShell(gh pr edit * --base=main*)",
+      "PowerShell(gh pr edit * -B main*)",
+      "PowerShell(gh pr edit * -B=main*)",
+      "PowerShell(gh pr edit * -Bmain*)"
+    ]
+  }
+}

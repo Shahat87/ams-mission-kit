@@ -1,0 +1,23 @@
+{
+  "name": "super-board",
+  "version": "3.1.3-ams.31",
+  "description": "Autonomous GitHub Project board runner. Primary skills: super-board, super-build, super-qa, super-review, super-collect. Secondary skills: visual, git-sync, ui-refine-loop. Installed as a plugin it ships the skills only; run /super-board onboard to add the guard hooks, .claude/bin scripts and workflows (get.sh / install.sh install all of it in one go).",
+  "author": {
+    "name": "AMS Tech"
+  },
+  "homepage": "https://github.com/Shahat87/ams-mission-kit",
+  "repository": "https://github.com/Shahat87/ams-mission-kit",
+  "license": "MIT",
+  "keywords": [
+    "github-projects",
+    "kanban",
+    "autonomous",
+    "workflows",
+    "qa",
+    "code-review"
+  ],
+  "skills": "./skills/",
+  "experimental": {
+    "evals": "evals"
+  }
+}

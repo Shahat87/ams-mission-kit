@@ -1,0 +1,4 @@
+# Fresh per run. No secrets. Telemetry off so no extra egress host is needed
+# (key name per grok 26-config-reference, UNVERIFIED on 1.0.50).
+[features]
+telemetry = "off"

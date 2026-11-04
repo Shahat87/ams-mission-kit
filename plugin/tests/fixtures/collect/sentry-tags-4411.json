@@ -1,0 +1,4 @@
+[{"key": "release", "topValues": [{"value": "web@1.4.2", "count": 21}, {"value": "web@1.4.1", "count": 16}]},
+ {"key": "browser", "topValues": [{"value": "Chrome 129", "count": 25}, {"value": "Safari 18", "count": 12}]},
+ {"key": "url", "topValues": [{"value": "https://shop.example.com/checkout", "count": 37}]},
+ {"key": "user.email", "topValues": [{"value": "jane@example.com", "count": 3}]}]
